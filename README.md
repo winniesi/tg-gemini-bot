@@ -8,14 +8,14 @@ Super easy, just a single click and you've got it set up on Vercel.
 
 ## Features
 
-- This is built with Flask - super straightforward and a easy to develop.
-- It's all front-end project, and you can get it up and running on Vercel with just one click.
+- This is built with Flask - super straightforward and easy to develop.
+- It's an all front-end project, and you can get it up and running on Vercel with just one click.
 - Supports Gemini continuous conversation. (Due to Vercel's restrictions, conversations may not be saved for a long time)
-- Supports both Gemini text, image interface and telegram markdown.
+- Supports both Gemini text, image interface, and telegram markdown.
 
 ## Preparation
 
-Get these things ready and you will need to fill them in the Vercel variables afterwards.
+Get these things ready, and then fill them in as environment variables in Vercel.
 
 - **GOOGLE_API_KEY**
 
@@ -27,7 +27,7 @@ Get these things ready and you will need to fill them in the Vercel variables af
 
 - **ALLOWED_USERS**
 
-  gather the Telegram usernames of folks who can use this bot, like @ohmorningsir (with or without @ is fine).
+  Gather the Telegram usernames of users who are permitted to access this bot, separating them with a comma (`,`). The usernames should be formatted like this: `name1,name2`. Including the `@` symbol is optional, so either `ohmorningsir` or `@ohmorningsir` is acceptable.
 
 ## Get Started
 
