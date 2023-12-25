@@ -1,6 +1,6 @@
 # tg-gemini-bot
 
-The tg-gemini-bot let's you use Google Gemini services right on your personal Telegram bot. 
+The tg-gemini-bot let's you use Google Gemini services right on your personal Telegram bot.
 
 Super easy, just a single click and you've got it set up on Vercel.
 
@@ -17,33 +17,31 @@ Super easy, just a single click and you've got it set up on Vercel.
 
 Get these things ready and you will need to fill them in the Vercel variables afterwards.
 
-- **GOOGLE_API_KEY** 
+- **GOOGLE_API_KEY**
 
   apply for your Google gemini pro api: https://makersuite.google.com/app/apikey
 
-- **BOT_TOKEN** 
+- **BOT_TOKEN**
 
   create your own telegram bot ([check the tutorial](https://flowxo.com/how-to-create-a-bot-for-telegram-short-and-simple-guide-for-beginners/)), obtain the token of the bot, which is in the format similar to: `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`
 
-- **ALLOWED_USERS** 
+- **ALLOWED_USERS**
 
   gather the Telegram usernames of folks who can use this bot, like @ohmorningsir (with or without @ is fine).
 
 ## Get Started
 
-1. Click  [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwinniesi%2Ftg-gemini-bot&env=BOT_TOKEN%2CGOOGLE_API_KEY%2CALLOWED_USERS&project-name=tg-gemini-bot&repository-name=tg-gemini-bot)  to deploy to Vercel. 
+1. Click [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwinniesi%2Ftg-gemini-bot&env=BOT_TOKEN%2CGOOGLE_API_KEY%2CALLOWED_USERS&project-name=tg-gemini-bot&repository-name=tg-gemini-bot) to deploy to Vercel.
 2. **Set the environment variable** according to the instructions below.
 3. Once everything's done, visit the domain name of your Vercel project address.
-4. Fill in your telegram bot on the page to associate telegram bot and vercel.
+4. Fill in your telegram bot token on the page to associate telegram bot and vercel.
 
 ![update_telegram_bot](./screenshots/update_telegram_bot.png)
 
 ## Environment Variable
 
-
-| Environment Variable | Required | Description                                                  |
-| -------------------- | -------- | ------------------------------------------------------------ |
-| GOOGLE_API_KEY       | Yes      | Your Google gemini pro api, it looks like `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc ` |
-| BOT_TOKEN            | Yes      | The Telegram bot token you applied for, it looks like ``67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`` |
-| ALLOWED_USERS        | Yes      | List the allowed Telegram usernames.  If there's more than one person, just split them with `,` and  it should look like: `name1,name2`. |
-
+| Environment Variable | Required | Description                                                                                                                            |
+| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| GOOGLE_API_KEY       | Yes      | Your Google gemini pro api, it looks like `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
+| BOT_TOKEN            | Yes      | The Telegram bot token you applied for, it looks like `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
+| ALLOWED_USERS        | Yes      | List the allowed Telegram usernames. If there's more than one person, just split them with `,` and it should look like: `name1,name2`. |
