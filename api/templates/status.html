@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Webhook</title>
+    <script src="https://unpkg.com/htmx.org@1.6.0/dist/htmx.min.js"></script>
+    <style>
+        .center-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        input,
+        a {
+            margin: 10px;
+        }
+    </style>
+    <script>
+        function updateURL() {
+            var userInput = document.getElementById('userInput').value;
+            var currentUrl = window.location.href;
+            var newUrl = 'https://api.telegram.org/bot' + userInput + '/setWebhook?url=' + currentUrl;
+
+            var webhookURL = document.getElementById('webhookURL');
+            webhookURL.href = newUrl;
+
+            var urlText = document.getElementById('urlText');
+            urlText.textContent = newUrl;
+        }
+
+        window.onload = function () {
+            updateURL();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="center-container">
+        <div>
+            <p>Once you've entered your telegram bot token, </p>
+            <p>simply click the link below to connect your Telegram bot
+                with Vercel.</p>
+        </div>
+        <div>telegram bot token: <input id="userInput" type="text" hx-trigger="keyup changed delay:500ms"
+                oninput="updateURL()" />
+        </div>
+        <div><a id="webhookURL" href="#">
+                <span id="urlText"></span>
+            </a></div>
+    </div>
+</body>
+
+</html>

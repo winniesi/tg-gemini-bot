@@ -11,3 +11,7 @@ venv/
 ENV/ 
 env.bak/ 
 venv.bak/ 
+.direnv
+variables.txt
+.DS_Store
+.envrc
