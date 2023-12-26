@@ -9,6 +9,7 @@ def handle_message(update_data):
     update = Update(update_data)
     authorized = is_authorized(update.from_id, update.user_name)
     if not authorized:
+        send_message(update.from_id, "😫 You are not allowed to use this bot.")
         return
     if update.type == "text":
         chat = chat_manager.get_chat(update.from_id)
