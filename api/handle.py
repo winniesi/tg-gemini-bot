@@ -1,9 +1,14 @@
 """
-All the chat that comes through the Telegram bot gets passed to the handle_message function. This function checks out if the user has the green light to chat with the bot. Once that's sorted, it figures out if the user sent words or an image and deals with it accordingly.
+All the chat that comes through the Telegram bot gets passed to the
+handle_message function. This function checks out if the user has the
+green light to chat with the bot. Once that's sorted, it figures out if
+the user sent words or an image and deals with it accordingly.
 
-For text messages, it fires up the ChatManager class that keeps track of the back-and-forth with that user.
+For text messages, it fires up the ChatManager class that keeps track of
+the back-and-forth with that user.
 
-As for images, in Gemini pro, they're context-free, so you can handle them pretty straight-up without much fuss.
+As for images, in Gemini pro, they're context-free, so you can handle
+them pretty straight-up without much fuss.
 """
 
 from .auth import is_authorized
