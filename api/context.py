@@ -1,9 +1,13 @@
 """
-The class ChatManager manages all users and their conversations in the form of a dictionary. 
+The class ChatManager manages all users and their conversations in the
+form of a dictionary. 
 
-Each user has a ChatConversation instance, which may include multiple previous conversations of the user (provided by the Google Gemini API).
+Each user has a ChatConversation instance, which may include multiple
+previous conversations of the user (provided by the Google Gemini API).
 
-The class ImageChatManager is rather simple, as the images in Gemini Pro do not have a contextual environment. This class performs some tasks such as obtaining photos to addresses and so on.
+The class ImageChatManager is rather simple, as the images in Gemini Pro
+do not have a contextual environment. This class performs some tasks
+such as obtaining photos to addresses and so on.
 """
 from io import BytesIO
 from typing import Dict
