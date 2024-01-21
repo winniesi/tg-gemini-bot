@@ -50,5 +50,5 @@ class Update:
 
     def _file_id(self):
         if self.type == "photo":
-            return self.update["message"]["photo"][0]["file_id"]
+            return self.update["message"]["photo"][-1]["file_id"]
         return ""
