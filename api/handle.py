@@ -28,7 +28,7 @@ def handle_message(update_data):
         chat = chat_manager.get_chat(update.from_id)
         anwser = chat.send_message(update.text)
         extra_text = (
-            "\n\nType /new to kick off a new chat." if chat.history_length >= 2 else ""
+            "\n\nType /new to kick off a new chat." if chat.history_length > 5 else ""
         )
         response_text = f"{anwser}{extra_text}"
         send_message(update.from_id, response_text)
