@@ -11,17 +11,17 @@ class ChatManager:
     """setting up a basic conversation storage manager"""
 
     def __init__(self):
-        self.chats: Dict[str, ChatConversation] = {}
+        self.chats: Dict[int, ChatConversation] = {}
 
-    def _new_chat(self, username: str) -> ChatConversation:
+    def _new_chat(self, from_id: int) -> ChatConversation:
         chat = ChatConversation()
-        self.chats[username] = chat
+        self.chats[from_id] = chat
         return chat
 
-    def get_chat(self, username: str) -> ChatConversation:
-        if self.chats.get(username) is None:
-            return self._new_chat(username)
-        return self.chats[username]
+    def get_chat(self, from_id: int) -> ChatConversation:
+        if self.chats.get(from_id) is None:
+            return self._new_chat(from_id)
+        return self.chats[from_id]
 
 
 class ImageChatManger:
