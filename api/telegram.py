@@ -8,12 +8,13 @@ from .config import BOT_TOKEN
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 
-def send_message(chat_id, text):
+def send_message(chat_id, text, **kwargs):
     """send text message"""
     payload = {
         "chat_id": chat_id,
         "text": escape(text),
         "parse_mode": "MarkdownV2",
+        **kwargs,
     }
     r = requests.post(f"{TELEGRAM_API}/sendMessage", data=payload)
     print(f"Sent message: {text} to {chat_id}")
@@ -29,6 +30,7 @@ class Update:
         self.photo_caption = self._photo_caption()
         self.file_id = self._file_id()
         self.user_name = update["message"]["from"]["username"]
+        self.message_id: int = update["message"]["message_id"]
 
     def _type(self):
         if "text" in self.update["message"]:

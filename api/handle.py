@@ -35,6 +35,11 @@ def handle_message(update_data):
     elif update.type == "photo":
         chat = ImageChatManger(update.photo_caption, update.file_id)
         response_text = chat.send_image()
-        send_message(update.from_id, response_text)
+        print(f"update.message_id {update.message_id}")
+        # Use the reply_to_message_id parameter to let the bot reply to
+        # a specific image.
+        send_message(
+            update.from_id, response_text, reply_to_message_id=update.message_id
+        )
     else:
         send_message(update.from_id, "GEMINI can currently handle only text and image.")
