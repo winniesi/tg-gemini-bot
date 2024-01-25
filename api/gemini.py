@@ -30,7 +30,6 @@ def generate_content(prompt: str) -> str:
             "HARM_CATEGORY_SEXUAL": "BLOCK_NONE",
         },
     )
-    print(response.prompt_feedback)
     return response.text
 
 
