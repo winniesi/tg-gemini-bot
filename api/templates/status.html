@@ -15,20 +15,35 @@
 
         input,
         a {
-            margin: 10px;
+            margin: 15px;
         }
     </style>
     <script>
         function updateURL() {
             var userInput = document.getElementById('userInput').value;
             var currentUrl = window.location.href;
-            var newUrl = 'https://api.telegram.org/bot' + userInput + '/setWebhook?url=' + currentUrl;
+            var newUrl1 = 'https://api.telegram.org/bot' + userInput + '/setWebhook?url=' + currentUrl + '&allowed_updates=' + '["message"]';
+            var newUrl2 = 'https://api.telegram.org/bot' + userInput + '/getWebhookInfo';
+            var newUrl3 = 'https://api.telegram.org/bot' + userInput + '/deleteWebhook';
 
-            var webhookURL = document.getElementById('webhookURL');
-            webhookURL.href = newUrl;
+            var setWebhookURL = document.getElementById('setWebhookURL');
+            setWebhookURL.href = newUrl1;
 
-            var urlText = document.getElementById('urlText');
-            urlText.textContent = newUrl;
+            var getWebhookInfoURL = document.getElementById('getWebhookInfoURL');
+            getWebhookInfoURL.href = newUrl2;
+
+            var deleteWebhookURL = document.getElementById('deleteWebhookURL');
+            deleteWebhookURL.href = newUrl3;
+
+
+            /*             var urlText = document.getElementById('urlText1');
+                        urlText.textContent = newUrl1;
+            
+                        var urlText = document.getElementById('urlText2');
+                        urlText.textContent = newUrl2;
+            
+                        var urlText = document.getElementById('urlText3');
+                        urlText.textContent = newUrl3; */
         }
 
         window.onload = function () {
@@ -45,10 +60,18 @@
                 with Vercel.</p>
         </div>
         <div>telegram bot token: <input id="userInput" type="text" hx-trigger="keyup changed delay:500ms"
-                oninput="updateURL()" />
+                oninput="updateURL()" style="width: 350px;" />
         </div>
-        <div><a id="webhookURL" href="#">
-                <span id="urlText"></span>
+        <div><a id="setWebhookURL" href="#">
+                <span id="setWebhook">setWebhook(start bot)</span>
+            </a></div>
+        <a></a>
+        <div><a id="getWebhookInfoURL" href="#">
+                <span id="getWebhookInfo">getWebhookInfo</span>
+            </a></div>
+        <a></a>
+        <div><a id="deleteWebhookURL" href="#">
+                <span id="deleteWebhook">deleteWebhook(stop bot)</span>
             </a></div>
     </div>
 </body>
