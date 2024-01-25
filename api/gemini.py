@@ -20,16 +20,7 @@ def list_models() -> None:
 
 def generate_content(prompt: str) -> str:
     """generate text from prompt"""
-    response = model_usual.generate_content(
-        prompt,
-        safety_settings={
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT": "BLOCK_NONE",
-            "HARM_CATEGORY_HATE_SPEECH": "BLOCK_NONE",
-            "HARM_CATEGORY_HARASSMENT": "BLOCK_NONE",
-            "HARM_CATEGORY_DANGEROUS_CONTENT": "BLOCK_NONE",
-            "HARM_CATEGORY_SEXUAL": "BLOCK_NONE",
-        },
-    )
+    response = model_usual.generate_content(prompt)
     return response.text
 
 
