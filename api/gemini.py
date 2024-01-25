@@ -3,7 +3,7 @@ from io import BytesIO
 import google.generativeai as genai
 import PIL.Image
 
-from .config import GOOGLE_API_KEY
+from .config import GOOGLE_API_KEY, safety_settings
 
 genai.configure(api_key=GOOGLE_API_KEY)
 model_usual = genai.GenerativeModel("gemini-pro")
@@ -20,15 +20,25 @@ def list_models() -> None:
 
 def generate_content(prompt: str) -> str:
     """generate text from prompt"""
-    response = model_usual.generate_content(prompt)
-    return response.text
+    try:
+        response = model_usual.generate_content(prompt, safety_settings=safety_settings)
+        result = response.text
+    except Exception as e:
+        result = f"🤖 {e}"
+    return result
 
 
 def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
     """generate text from prompt and image"""
     img = PIL.Image.open(image_bytes)
-    response = model_vision.generate_content([prompt, img])
-    return response.text
+    try:
+        response = model_vision.generate_content(
+            [prompt, img], safety_settings=safety_settings
+        )
+        result = response.text
+    except Exception as e:
+        result = f"🤖 {e}\n\n🤷‍♀️ This is most likely due to Gemini's restrictions on image content safety."
+    return result
 
 
 class ChatConversation:
@@ -44,13 +54,16 @@ class ChatConversation:
         """send message"""
         if prompt.startswith("/new"):
             self.__init__()
-            response = "🍺 We're having a fresh chat."
+            result = "🍺 We're having a fresh chat."
         else:
             try:
-                response = self.chat.send_message(prompt).text
+                response = self.chat.send_message(
+                    prompt, safety_settings=safety_settings
+                )
+                result = response.text
             except Exception as e:
-                response = f"🤖 {e}"
-        return response
+                result = f"🤖 {e}\n\n🤷‍♀️ This is most likely due to Gemini's restrictions on content safety"
+        return result
 
     @property
     def history(self):
