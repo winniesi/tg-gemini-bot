@@ -6,6 +6,8 @@ Super easy, just a single click and you've got it set up on Vercel.
 
 ![screen](./screenshots/screen.png)
 
+🚀 If you don't want to deploy it yourself, you can use this deployment-free telegram bot: [GeminiBot](https://t.me/geminipro_api_bot). This bot is a fork from this project, providing completely identical features.
+
 ## Features
 
 - This is built with Flask - super straightforward and easy to develop.
@@ -35,7 +37,7 @@ Get these things ready, and then fill them in as environment variables in Vercel
 
 2. **Set the environment variable** according to the instructions below.
 
-3. Once everything's done, visit the domain name of your Vercel project address. (Visiting the `Domains` instead of the `Deployment Domains` provided by Vercel for the project .) 
+3. Once everything's done, visit the domain name of your Vercel project address. (Visiting the `Domains` instead of the `Deployment Domains` provided by Vercel for the project .)
 
    Or you could just click on `https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain> ` to connect your Telegram bot to Vercel services. (remember to replace <token> with your actual corresponding parameters)
 
@@ -59,8 +61,8 @@ So, if you've done everything step by step just like we talked about and your Te
 
 1. Open your project in vercel, click on the **Deployments** tab, check whether the deployment is successful, if there is an error, please modify according to the error prompt.
 
-2. If no errors have occurred here, open the **Logs** tab, click on an erroneous log, and the program's output will be displayed on the right. 
+2. If no errors have occurred here, open the **Logs** tab, click on an erroneous log, and the program's output will be displayed on the right.
 
-  ![screen](./screenshots/vercel_logs.png)
+![screen](./screenshots/vercel_logs.png)
 
 3. If there are any error messages, you can open an issue, and then provide the error information.
