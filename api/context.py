@@ -1,6 +1,6 @@
 """
 The class ChatManager manages all users and their conversations in the
-form of a dictionary. 
+form of a dictionary.
 
 Each user has a ChatConversation instance, which may include multiple
 previous conversations of the user (provided by the Google Gemini API).
