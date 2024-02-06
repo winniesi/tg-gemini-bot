@@ -3,11 +3,19 @@ from io import BytesIO
 import google.generativeai as genai
 import PIL.Image
 
-from .config import GOOGLE_API_KEY, safety_settings
+from .config import GOOGLE_API_KEY, generation_config, safety_settings
 
-genai.configure(api_key=GOOGLE_API_KEY)
-model_usual = genai.GenerativeModel("gemini-pro")
-model_vision = genai.GenerativeModel("gemini-pro-vision")
+genai.configure(api_key=GOOGLE_API_KEY[0])
+
+model_usual = genai.GenerativeModel(
+    model_name="gemini-pro",
+    generation_config=generation_config,
+    safety_settings=safety_settings)
+
+model_vision = genai.GenerativeModel(
+    model_name="gemini-pro-vision",
+    generation_config=generation_config,
+    safety_settings=safety_settings)
 
 
 def list_models() -> None:
@@ -17,14 +25,14 @@ def list_models() -> None:
         if "generateContent" in m.supported_generation_methods:
             print(m.name)
 
-
+""" This function is deprecated """
 def generate_content(prompt: str) -> str:
     """generate text from prompt"""
     try:
-        response = model_usual.generate_content(prompt, safety_settings=safety_settings)
+        response = model_usual.generate_content(prompt)
         result = response.text
     except Exception as e:
-        result = f"🤖 {e}"
+        result = f"Something went wrong!\n{repr(e)}\n\nThe content you entered may be inappropriate, please modify it and try again"
     return result
 
 
@@ -32,12 +40,10 @@ def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
     """generate text from prompt and image"""
     img = PIL.Image.open(image_bytes)
     try:
-        response = model_vision.generate_content(
-            [prompt, img], safety_settings=safety_settings
-        )
+        response = model_vision.generate_content([prompt, img])
         result = response.text
     except Exception as e:
-        result = f"🤖 {e}\n\n🤷‍♀️ This is most likely due to Gemini's restrictions on image content safety."
+        result = f"Something went wrong!\n{repr(e)}\n\nThe content you entered may be inappropriate, please modify it and try again"
     return result
 
 
@@ -54,15 +60,13 @@ class ChatConversation:
         """send message"""
         if prompt.startswith("/new"):
             self.__init__()
-            result = "🍺 We're having a fresh chat."
+            result = "We're having a fresh chat."
         else:
             try:
-                response = self.chat.send_message(
-                    prompt, safety_settings=safety_settings
-                )
+                response = self.chat.send_message(prompt)
                 result = response.text
             except Exception as e:
-                result = f"🤖 {e}\n\n🤷‍♀️ This is most likely due to Gemini's restrictions on content safety"
+                result = f"Something went wrong!\n{repr(e)}\n\nThe content you entered may be inappropriate, please modify it and try again"
         return result
 
     @property
