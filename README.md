@@ -29,7 +29,8 @@ Get these things ready, and then fill them in as environment variables in Vercel
 
 - **ALLOWED_USERS**
 
-  Gather the Telegram usernames of users who are permitted to access this bot, separating them with a comma (`,`). The usernames should be formatted like this: `name1,name2`. Including the `@` symbol is optional, so either `ohmorningsir` or `@ohmorningsir` is acceptable.
+  Gather the Telegram usernames of users who are permitted to access this bot, separating them with a comma (`,`). The usernames should be formatted like this: `name1,name2`.
+  You can also choose to turn off auch. [learn more](#environment-variable)
 
 ## Get Started
 
@@ -50,10 +51,13 @@ Get these things ready, and then fill them in as environment variables in Vercel
 ## Environment Variable
 
 | Environment Variable | Required | Description                                                                                                                            |
-| -------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| GOOGLE_API_KEY       | Yes      | Your Google gemini pro api, it looks like `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
-| BOT_TOKEN            | Yes      | The Telegram bot token you applied for, it looks like `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
-| ALLOWED_USERS        | Yes      | List the allowed Telegram usernames. If there's more than one person, just split them with `,` and it should look like: `name1,name2`. |
+| -------------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| GOOGLE_API_KEY       | YES | Your Google gemini pro api, it looks like `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
+| BOT_TOKEN            | YES | The Telegram bot token you applied for, it looks like `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
+| ALLOWED_USERS        | No | List the allowed Telegram usernames. If there's more than one person, just split them with `,` and it should look like: `name1,name2`.Including the `@` symbol is optional, so either `ohmorningsir` or `@ohmorningsir` is acceptable. No need to be case sensitive. If you do not set a username, you can use id instead.use `/get_my_info` to get. |
+| IS_DEBUG_MODE | No | Whether to enable debug mode. `0` to disenable. `1` to enable. Default is `0` . |
+| ADMIN_ID | No | ten-digit telegramID. If you want to enable debug mode, this value must be set correctly |
+| AUCH_ENABLE | No | `0` to disenable auth. Anyone can use this bot. `1` to enable auth. Enabled by default. |
 
 ## How to figure out what's wrong
 
