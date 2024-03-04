@@ -24,15 +24,15 @@ class ChatManager:
     def __init__(self):
         self.chats: Dict[int, ChatConversation] = {}
 
-    def _new_chat(self, from_id: int) -> ChatConversation:
+    def _new_chat(self, history_id: int) -> ChatConversation:
         chat = ChatConversation()
-        self.chats[from_id] = chat
+        self.chats[history_id] = chat
         return chat
 
-    def get_chat(self, from_id: int) -> ChatConversation:
-        if self.chats.get(from_id) is None:
-            return self._new_chat(from_id)
-        return self.chats[from_id]
+    def get_chat(self, history_id: int) -> ChatConversation:
+        if self.chats.get(history_id) is None:
+            return self._new_chat(history_id)
+        return self.chats[history_id]
 
 
 class ImageChatManger:

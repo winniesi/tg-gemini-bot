@@ -3,7 +3,7 @@ from io import BytesIO
 import google.generativeai as genai
 import PIL.Image
 
-from .config import GOOGLE_API_KEY, generation_config, safety_settings
+from .config import GOOGLE_API_KEY, generation_config, safety_settings, gemini_err_info, new_chat_info
 
 genai.configure(api_key=GOOGLE_API_KEY[0])
 
@@ -32,7 +32,7 @@ def generate_content(prompt: str) -> str:
         response = model_usual.generate_content(prompt)
         result = response.text
     except Exception as e:
-        result = f"Something went wrong!\n{repr(e)}\n\nThe content you entered may be inappropriate, please modify it and try again"
+        result = f"{gemini_err_info}\n{repr(e)}"
     return result
 
 
@@ -43,7 +43,7 @@ def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
         response = model_vision.generate_content([prompt, img])
         result = response.text
     except Exception as e:
-        result = f"Something went wrong!\n{repr(e)}\n\nThe content you entered may be inappropriate, please modify it and try again"
+        result = f"{gemini_err_info}\n{repr(e)}"
     return result
 
 
@@ -60,13 +60,13 @@ class ChatConversation:
         """send message"""
         if prompt.startswith("/new"):
             self.__init__()
-            result = "We're having a fresh chat."
+            result = new_chat_info
         else:
             try:
                 response = self.chat.send_message(prompt)
                 result = response.text
             except Exception as e:
-                result = f"Something went wrong!\n{repr(e)}\n\nThe content you entered may be inappropriate, please modify it and try again"
+                result = f"{gemini_err_info}\n{repr(e)}"
         return result
 
     @property
