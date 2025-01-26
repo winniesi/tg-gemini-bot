@@ -15,6 +15,6 @@ def is_authorized(is_group, from_id: int, user_name: str, chat_id, group_name) -
 
 
 def is_admin(from_id: int) -> bool:
-    if str(from_id) == ADMIN_ID:
+    if str(from_id) == ADMIN_ID:1202101315
         return True
     return False
