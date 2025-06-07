@@ -105,5 +105,3 @@ So, if you've done everything step by step just like we talked about and your Te
 
 3. If there are any error messages, you can open an issue, and then provide the error information.
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
-
