@@ -73,6 +73,17 @@ class ChatConversation:
                 result = response.text
             except Exception as e:
                 result = f"{gemini_err_info}\n{repr(e)}"
+        elif prompt.startswith("/chat"):
+            self.__init__()
+            new_prompt = NEW_CHAT_PROMPT
+            if not new_prompt:
+                return "The default prompt is not set. Please contact the administrator to set the NEW_CHAT_PROMPT environment variable.\n默认提示词未设置，请联系管理员设置 NEW_CHAT_PROMPT 环境变量。"
+
+            try:
+                response = self.chat.send_message(new_prompt)
+                result = response.text
+            except Exception as e:
+                result = f"{gemini_err_info}\n{repr(e)}"
         else:
             try:
                 response = self.chat.send_message(prompt)
