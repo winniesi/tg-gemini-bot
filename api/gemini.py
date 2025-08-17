@@ -3,7 +3,7 @@ from io import BytesIO
 import google.generativeai as genai
 import PIL.Image
 
-from .config import GOOGLE_API_KEY, generation_config, safety_settings, gemini_err_info, new_chat_info
+from .config import GOOGLE_API_KEY, generation_config, safety_settings, gemini_err_info, new_chat_info, NEW_CHAT_PROMPT
 
 genai.configure(api_key=GOOGLE_API_KEY[0])
 
@@ -53,14 +53,26 @@ class ChatConversation:
     it triggers the start of a fresh conversation.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, prompt: str = "") -> None:
         self.chat = model_usual.start_chat(history=[])
+        if prompt:
+            self.send_message(prompt)
 
     def send_message(self, prompt: str) -> str:
         """send message"""
         if prompt.startswith("/new"):
             self.__init__()
-            result = new_chat_info
+            new_prompt = prompt[4:].strip()
+            if not new_prompt:
+                new_prompt = NEW_CHAT_PROMPT
+            if not new_prompt:
+                return new_chat_info
+
+            try:
+                response = self.chat.send_message(new_prompt)
+                result = response.text
+            except Exception as e:
+                result = f"{gemini_err_info}\n{repr(e)}"
         else:
             try:
                 response = self.chat.send_message(prompt)
