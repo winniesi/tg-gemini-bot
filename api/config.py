@@ -26,40 +26,41 @@ GROUP_MODE = os.getenv("GROUP_MODE=", "1")
 prompt_new_threshold = int(3)
 
 #The default prompt when the photo has no accompanying text
-defaut_photo_caption = "describe this picture"
+defaut_photo_caption = "描述这张图片"
 
 """ Below is some text related to the user """
-help_text = "You can send me text or pictures. When sending pictures, please include the text in the same message.\nTo use the group please @bot or reply to any message sent by the bot"
-command_list = "/new Start a new chat\n/get_my_info Get personal information\n/get_group_info Get group information (group only)\n/get_allowed_users Get the list of users that are allowed to use the bot (admin only)\n/get_allowed_groups Get the list of groups that are allowed to use the bot (admin only)\n/list_models list_models (admin only)\n/get_api_key Get the list of gemini's apikeys. It is currently useless. Multiple keys may be added to automatically switch in the future.(admin only)\n/help Get help\n/5g_test :)"
-admin_auch_info = "You are not the administrator or your administrator ID is set incorrectly!!!"
+help_text = "You can send me text or pictures. When sending pictures, please include the text in the same message.\nTo use the group please @bot or reply to any message sent by the bot\n\n你可以向我发送文字或图片，发送图片请在同一条消息内携带文字\n群组使用请@机器人或回复机器人发送的任意消息"
+command_list = "/new Start a new chat\n/get_my_info Get personal information\n/get_group_info Get group information (group only)\n/get_allowed_users Get the list of users that are allowed to use the bot (admin only)\n/get_allowed_groups Get the list of groups that are allowed to use the bot (admin only)\n/list_models list_models (admin only)\n/get_api_key Get the list of gemini's apikeys. It is currently useless. Multiple keys may be added to automatically switch in the future.(admin only)\n/help Get help\n/5g_test :)\n\n/new 开始新的聊天\n/get_my_info 获取个人信息\n/get_group_info 获取群组信息（仅群组可用）\n/get_allowed_users 获取允许使用机器人的用户列表（仅管理员可用）\n/get_allowed_groups 获取允许使用机器人的群组列表\n/list_models 列出模型（仅管理员可用）\n/get_api_key 获取gemini的apikey的列表，目前没有用，以后可能会添加多个key自动切换（仅管理员可用）\n/help 获取帮助\n/5g_test :)"
+admin_auch_info = "You are not the administrator or your administrator ID is set incorrectly!!!\n你不是管理员或你的管理员id设置错误！！！"
 debug_mode_info = "Debug mode is not enabled!"
-command_format_error_info = "Command format error"
-command_invalid_error_info = "Invalid command, use /help for help"
-user_no_permission_info = "You are not allowed to use this bot."
-group_no_permission_info = "This group does not have permission to use this robot."
-gemini_err_info = f"Something went wrong!\nThe content you entered may be inappropriate, please modify it and try again"
-new_chat_info = "We're having a fresh chat."
-prompt_new_info = "Type /new to kick off a new chat."
-unable_to_recognize_content_sent = "The content you sent is not recognized!"
+command_format_error_info = "Command format error\n命令格式错误"
+command_invalid_error_info = "Invalid command, use /help for help\n无效的指令，使用/help来获取帮助"
+user_no_permission_info = "You are not allowed to use this bot.\n您无权使用此机器人。"
+group_no_permission_info = "This group does not have permission to use this robot.\n此群无权使用此机器人。"
+gemini_err_info = f"Something went wrong!\nThe content you entered may be inappropriate, please modify it and try again\n您输入的内容可能不合适，请修改后重试"
+new_chat_info = "We're having a fresh chat.\n我们正在进行新的聊天。"
+prompt_new_info = "Type /new to kick off a new chat.\n输入 /new 开始新的聊天。"
+unable_to_recognize_content_sent = "The content you sent is not recognized!\n无法识别您发送的内容!"
 
 """ Below is some text related to the log """
-send_message_log = "Send a message. The content returned is:"
-send_photo_log = "Send a photo. The content returned is:"
-unnamed_user = "UnnamedUser"
-unnamed_group = "UnnamedGroup"
-event_received = "event received"
-group = "group"
-the_content_sent_is = "The content sent is:"
-the_reply_content_is = "The reply content is:"
-the_accompanying_message_is = "The accompanying message is:"
-the_logarithm_of_historical_conversations_is = "The logarithm of historical conversations is:"
-no_rights_to_use = "No rights to use"
-send_unrecognized_content = "Send unrecognized content"
+send_message_log = "发送消息 返回的内容为:"
+send_photo_log = "发送图片 返回的内容为:"
+unnamed_user = "未命名用户"
+unnamed_group = "未命名群组"
+event_received = "收到事件"
+group = "群group"
+the_content_sent_is = "发送的内容为:"
+the_reply_content_is = "回复的内容为:"
+the_accompanying_message_is = "附带的消息为:"
+the_logarithm_of_historical_conversations_is = "历史对话对数为:"
+no_rights_to_use = "无权使用"
+send_unrecognized_content = "发送无法识别的内容"
+
 
 
 """ read https://ai.google.dev/api/rest/v1/GenerationConfig """
 generation_config = {
-    "max_output_tokens": 1024,
+    "max_output_tokens": 8192,
 }
 
 """ read https://ai.google.dev/api/rest/v1/HarmCategory """
