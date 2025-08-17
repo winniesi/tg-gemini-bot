@@ -39,7 +39,7 @@ user_no_permission_info = "You are not allowed to use this bot.\n您无权使用
 group_no_permission_info = "This group does not have permission to use this robot.\n此群无权使用此机器人。"
 gemini_err_info = f"Something went wrong!\nThe content you entered may be inappropriate, please modify it and try again\n您输入的内容可能不合适，请修改后重试"
 new_chat_info = "We're having a fresh chat.\n我们正在进行新的聊天。"
-prompt_new_info = "Type /new to kick off a new chat.\n输入 /new 开始新的聊天。"
+
 unable_to_recognize_content_sent = "The content you sent is not recognized!\n无法识别您发送的内容!"
 
 """ Below is some text related to the log """
