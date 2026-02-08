@@ -1,22 +1,20 @@
-﻿from time import sleep
-
-import google.generativeai as genai
+from time import sleep
 
 from .auth import is_admin
 from .config import *
 from .printLog import send_log
 from .telegram import send_message
-
+from .gemini import client
 
 def help():
     result = f"{help_text}\n\n{command_list}"
     return result
 
 def list_models():
-    for m in genai.list_models():
+    for m in client.models.list():
         #send_log(str(m))
         print(str(m))
-        if 'generateContent' in m.supported_generation_methods:
+        if hasattr(m, 'name'):
             send_log(str(m.name))
             print(str(m.name))
     return ""
