@@ -1,5 +1,0 @@
-{
-  "buildCommand": "vercel-build",
-  "framework": null,
-  "nodeVersion": "24.x"
-}
