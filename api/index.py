@@ -9,6 +9,9 @@ app = Flask(__name__)
 def home():
     if request.method == "POST":
         update = request.json
-        handle_message(update)
+        try:
+            handle_message(update)
+        except Exception as e:
+            print(f"Error while handling update: {repr(e)}")
         return "ok"
     return render_template("status.html")

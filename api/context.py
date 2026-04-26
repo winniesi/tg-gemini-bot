@@ -14,8 +14,8 @@ from typing import Dict
 
 import requests
 
-from .config import BOT_TOKEN
-from .gemini import ChatConversation, generate_text_with_image
+from .gemini import ChatConversation, generate_text_with_image, generate_text_with_file
+from .telegram import get_file_content, get_file_url
 
 
 class ChatManager:
@@ -40,22 +40,28 @@ class ImageChatManger:
         self.prompt = prompt
         self.file_id = file_id
 
-    def tel_photo_url(self) -> str:
-        """process telegram photo url"""
-        r_file_id = requests.get(
-            f"https://api.telegram.org/bot{BOT_TOKEN}/getFile?file_id={self.file_id}"
-        )
-        file_path = r_file_id.json().get("result").get("file_path")
-        download_url = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_path}"
-        return download_url
-
     def photo_bytes(self) -> BytesIO:
         """get photo bytes"""
-        photo_url = self.tel_photo_url()
+        photo_url = get_file_url(self.file_id)
         response = requests.get(photo_url)
         photo_bytes = BytesIO(response.content)
         return photo_bytes
 
     def send_image(self) -> str:
         response = generate_text_with_image(self.prompt, self.photo_bytes())
+        return response
+
+
+class MediaChatManager:
+    def __init__(self, media_type, mime_type, file_id, prompt):
+        self.media_type = media_type
+        self.mime_type = mime_type
+        self.file_id = file_id
+        self.prompt = prompt
+        self.file_url = get_file_url(self.file_id)
+
+    def send_media(self):
+        file_bytes = get_file_content(self.file_url)
+
+        response = generate_text_with_file(self.prompt, file_bytes, self.mime_type)
         return response
