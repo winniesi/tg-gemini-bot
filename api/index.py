@@ -50,6 +50,27 @@ def ensure_webhook():
             _webhook_set = True
         except Exception as e:
             print(f"Failed to check/set webhook: {e}")
+        # Set bot command menu
+        try:
+            commands = [
+                {"command": "new", "description": "Start a new chat"},
+                {"command": "get_model", "description": "Show current Gemini model"},
+                {"command": "set_model", "description": "Switch Gemini model (admin)"},
+                {"command": "list_models", "description": "List available models (admin)"},
+                {"command": "get_my_info", "description": "Get your account info"},
+                {"command": "get_group_info", "description": "Get group info (group only)"},
+                {"command": "get_allowed_users", "description": "Show allowed users (admin)"},
+                {"command": "get_allowed_groups", "description": "Show allowed groups (admin)"},
+                {"command": "get_api_key", "description": "Show API keys (admin)"},
+            ]
+            http_requests.post(
+                f"https://api.telegram.org/bot{BOT_TOKEN}/setMyCommands",
+                json={"commands": commands},
+                timeout=5
+            )
+            print("Bot command menu set")
+        except Exception as e:
+            print(f"Failed to set commands: {e}")
 
 
 @app.route("/", methods=["POST", "GET"])
