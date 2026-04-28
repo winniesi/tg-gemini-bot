@@ -1,3 +1,4 @@
+import time
 from io import BytesIO
 
 from google import genai
@@ -12,6 +13,35 @@ from .config import (
 client = genai.Client(api_key=GOOGLE_API_KEY[0])
 
 current_model = DEFAULT_MODEL
+
+# Transient error codes that are safe to retry
+_RETRY_CODES = {429, 500, 503}
+_MAX_RETRIES = 3
+_RETRY_DELAYS = [2, 4, 8]  # exponential backoff in seconds
+
+
+def _is_retryable(exc: Exception) -> bool:
+    """Check if exception is a transient Gemini API error."""
+    s = str(exc)
+    for code in _RETRY_CODES:
+        if str(code) in s:
+            return True
+    return False
+
+
+def _call_with_retry(fn, *args, **kwargs):
+    """Call a Gemini API function with retry on transient errors."""
+    last_exc = None
+    for attempt in range(_MAX_RETRIES):
+        try:
+            return fn(*args, **kwargs)
+        except Exception as e:
+            last_exc = e
+            if _is_retryable(e) and attempt < _MAX_RETRIES - 1:
+                time.sleep(_RETRY_DELAYS[attempt])
+                continue
+            raise
+    raise last_exc
 
 
 def get_current_model():
@@ -46,7 +76,8 @@ def list_models():
 def generate_content(prompt: str) -> str:
     """generate text from prompt"""
     try:
-        response = client.models.generate_content(
+        response = _call_with_retry(
+            client.models.generate_content,
             model=current_model,
             contents=prompt,
             config=_build_gen_config(),
@@ -61,7 +92,8 @@ def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
     """generate text from prompt and image"""
     img = PIL.Image.open(image_bytes)
     try:
-        response = client.models.generate_content(
+        response = _call_with_retry(
+            client.models.generate_content,
             model=current_model,
             contents=[prompt, img],
             config=_build_gen_config(),
@@ -95,7 +127,7 @@ class ChatConversation:
             result = new_chat_info
         else:
             try:
-                response = self.chat.send_message(prompt)
+                response = _call_with_retry(self.chat.send_message, prompt)
                 result = response.text
             except Exception as e:
                 result = f"{gemini_err_info}\n{repr(e)}"
