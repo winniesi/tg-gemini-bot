@@ -2,9 +2,10 @@ from flask import Flask, render_template, request
 import requests as http_requests
 import os
 import threading
+import traceback
 
 from .handle import handle_message
-from .config import BOT_TOKEN
+from .config import BOT_TOKEN, ALLOWED_USERS, DEFAULT_MODEL
 
 app = Flask(__name__)
 
@@ -56,6 +57,35 @@ def home():
     ensure_webhook()
     if request.method == "POST":
         update = request.json
-        handle_message(update)
+        try:
+            handle_message(update)
+        except Exception as e:
+            err = traceback.format_exc()
+            print(f"ERROR handling message: {err}")
+            # Try to notify user of the error
+            try:
+                msg = update.get("message", {})
+                chat_id = msg.get("chat", {}).get("id")
+                if chat_id:
+                    http_requests.post(
+                        f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
+                        json={"chat_id": chat_id, "text": f"⚠️ Error: {e}"},
+                        timeout=5
+                    )
+            except:
+                pass
         return "ok"
     return render_template("status.html")
+
+
+@app.route("/debug", methods=["GET"])
+def debug():
+    """Debug endpoint to check config state."""
+    token_preview = (BOT_TOKEN[:6] + "...") if BOT_TOKEN else "NOT SET"
+    return {
+        "bot_token": token_preview,
+        "allowed_users": ALLOWED_USERS,
+        "default_model": DEFAULT_MODEL,
+        "webhook_url_env": os.environ.get("WEBHOOK_URL", "not set"),
+        "vercel_url": os.environ.get("VERCEL_URL", "not set"),
+    }
