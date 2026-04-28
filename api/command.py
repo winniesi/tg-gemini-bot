@@ -112,6 +112,19 @@ def excute_command(from_id, command, from_type, chat_id):
     elif command.startswith("get_my_info"):
         return get_my_info(from_id)
 
+    elif command == "debug_admin":
+        from_id_type = type(from_id).__name__
+        admin_id_val = ADMIN_ID
+        admin_id_type = type(admin_id_val).__name__
+        match = str(from_id) == admin_id_val
+        return (f"from_id: `{from_id}` (type: {from_id_type})
+"
+                f"ADMIN_ID: `{admin_id_val}` (type: {admin_id_type})
+"
+                f"str(from_id): `{str(from_id)}`
+"
+                f"Match: {match}")
+
     elif command.startswith("get_group_info"):
         return get_group_info(from_type, chat_id)
 
