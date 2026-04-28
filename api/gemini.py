@@ -11,7 +11,7 @@ from .config import (
 
 client = genai.Client(api_key=GOOGLE_API_KEY[0])
 
-_MODEL_VERSION = "gemini-flash-latest"
+_MODEL_VERSION = "gemini-2.5-flash"
 
 
 def _build_gen_config():
