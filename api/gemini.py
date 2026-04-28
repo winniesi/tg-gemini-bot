@@ -6,12 +6,21 @@ import PIL.Image
 
 from .config import (
     GOOGLE_API_KEY, generation_config, safety_settings,
-    gemini_err_info, new_chat_info, SYSTEM_INSTRUCTION,
+    gemini_err_info, new_chat_info, SYSTEM_INSTRUCTION, DEFAULT_MODEL,
 )
 
 client = genai.Client(api_key=GOOGLE_API_KEY[0])
 
-_MODEL_VERSION = "gemini-2.5-flash"
+current_model = DEFAULT_MODEL
+
+
+def get_current_model():
+    return current_model
+
+
+def set_model(model_name: str):
+    global current_model
+    current_model = model_name
 
 
 def _build_gen_config():
@@ -38,7 +47,7 @@ def generate_content(prompt: str) -> str:
     """generate text from prompt"""
     try:
         response = client.models.generate_content(
-            model=_MODEL_VERSION,
+            model=current_model,
             contents=prompt,
             config=_build_gen_config(),
         )
@@ -53,7 +62,7 @@ def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
     img = PIL.Image.open(image_bytes)
     try:
         response = client.models.generate_content(
-            model=_MODEL_VERSION,
+            model=current_model,
             contents=[prompt, img],
             config=_build_gen_config(),
         )
@@ -71,7 +80,7 @@ class ChatConversation:
 
     def __init__(self) -> None:
         self.chat = client.chats.create(
-            model=_MODEL_VERSION,
+            model=current_model,
             config=_build_gen_config(),
         )
 

@@ -19,6 +19,7 @@ ADMIN_ID = os.getenv("ADMIN_ID", "1234567890")
 #Determines whether to verify identity. If 0, anyone can use the bot. It is enabled by default.
 AUCH_ENABLE = os.getenv("AUCH_ENABLE", "1")
 SYSTEM_INSTRUCTION = os.getenv("SYSTEM_INSTRUCTION", "")
+DEFAULT_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 
 #"1"to use the same chat history in the group, "2"to record chat history individually for each person
@@ -32,7 +33,7 @@ defaut_photo_caption = "describe this picture"
 
 """ Below is some text related to the user """
 help_text = "You can send me text or pictures. When sending pictures, please include the text in the same message.\nTo use the group please @bot or reply to any message sent by the bot"
-command_list = "/new Start a new chat\n/get_my_info Get personal information\n/get_group_info Get group information (group only)\n/get_allowed_users Get the list of users that are allowed to use the bot (admin only)\n/get_allowed_groups Get the list of groups that are allowed to use the bot (admin only)\n/list_models list_models (admin only)\n/get_api_key Get the list of gemini's apikeys. It is currently useless. Multiple keys may be added to automatically switch in the future.(admin only)\n/help Get help\n/5g_test :)"
+command_list = "/new Start a new chat\n/get_my_info Get personal information\n/get_group_info Get group information (group only)\n/get_allowed_users Get the list of users that are allowed to use the bot (admin only)\n/get_allowed_groups Get the list of groups that are allowed to use the bot (admin only)\n/list_models List available Gemini models (admin only)\n/set_model Switch Gemini model (admin only)\n/get_model Show current model\n/get_api_key Get the list of gemini's apikeys. (admin only)\n/help Get help\n/5g_test :)"
 admin_auch_info = "You are not the administrator or your administrator ID is set incorrectly!!!"
 debug_mode_info = "Debug mode is not enabled!"
 command_format_error_info = "Command format error"

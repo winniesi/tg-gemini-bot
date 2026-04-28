@@ -4,7 +4,7 @@ from .auth import is_admin
 from .config import *
 from .printLog import send_log
 from .telegram import send_message
-from .gemini import client
+from .gemini import client, set_model, get_current_model
 
 def help():
     result = f"{help_text}\n\n{command_list}"
@@ -18,6 +18,19 @@ def list_models():
     if models:
         return "Available models:\n" + "\n".join(models)
     return "No models found"
+
+
+def get_model():
+    return f"Current model: `{get_current_model()}`"
+
+
+def set_model_cmd(command):
+    parts = command.strip().split(maxsplit=1)
+    if len(parts) < 2:
+        return "Usage: /set_model <model_name>\nExample: /set_model gemini-2.5-pro\n\nUse /list_models to see available models."
+    model_name = parts[1].strip()
+    set_model(model_name)
+    return f"Model switched to: `{model_name}`\nNote: existing conversations will use the old model. Send /new to start fresh."
 
 def get_my_info(id):
     return f"your telegram id is: `{id}`"
@@ -92,6 +105,14 @@ def excute_command(from_id, command, from_type, chat_id):
             return get_API_key()
         elif command == "list_models":
             return list_models()
+
+    elif command.startswith("set_model"):
+        if not is_admin(from_id):
+            return admin_auch_info
+        return set_model_cmd(command)
+
+    elif command.startswith("get_model"):
+        return get_model()
 
     else:
         return command_format_error_info
