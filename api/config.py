@@ -18,9 +18,11 @@ ADMIN_ID = os.getenv("ADMIN_ID", "1234567890")
 
 #Determines whether to verify identity. If 0, anyone can use the bot. It is enabled by default.
 AUCH_ENABLE = os.getenv("AUCH_ENABLE", "1")
+SYSTEM_INSTRUCTION = os.getenv("SYSTEM_INSTRUCTION", "")
+
 
 #"1"to use the same chat history in the group, "2"to record chat history individually for each person
-GROUP_MODE = os.getenv("GROUP_MODE=", "1")
+GROUP_MODE = os.getenv("GROUP_MODE", "1")
 
 #After setting up 3 rounds of dialogue, prompt the user to start a new dialogue
 prompt_new_threshold = int(3)

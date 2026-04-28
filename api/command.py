@@ -11,13 +11,13 @@ def help():
     return result
 
 def list_models():
+    models = []
     for m in client.models.list():
-        #send_log(str(m))
-        print(str(m))
         if hasattr(m, 'name'):
-            send_log(str(m.name))
-            print(str(m.name))
-    return ""
+            models.append(m.name)
+    if models:
+        return "Available models:\n" + "\n".join(models)
+    return "No models found"
 
 def get_my_info(id):
     return f"your telegram id is: `{id}`"
@@ -87,7 +87,7 @@ def excute_command(from_id, command, from_type, chat_id):
         if command == "get_allowed_users":
             return get_allowed_users()
         elif command == "get_allowed_groups":
-            return get_allowed_groups
+            return get_allowed_groups()
         elif command == "get_api_key":
             return get_API_key()
         elif command == "list_models":

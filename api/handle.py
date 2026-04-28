@@ -23,14 +23,9 @@ chat_manager = ChatManager()
 
 def handle_message(update_data):
 
-    #try:
-    #    update = update_data["message"]["from"]["id"]
-    #except  Exception as e:
-    #    strupdate_data = str(update_data)
-    #    start = strupdate_data.find("\'id\': ")
-    #    from_id = strupdate_data[start+6:start+16]
-    #    send_message(from_id, f"You have sent an unknown event. Please send the following information to the bot administrator.\n您发送了一个未知事件，请把下面信息发送至bot管理员。\n\n{update_data}\n{e}")
-    #    send_message(admin_id, f"收到了一个未知事件，原文为：\n{update_data}\n错误为：\n{e}")
+    if "message" not in update_data:
+        print(f"Ignoring non-message update: {list(update_data.keys())}")
+        return
 
     update = Update(update_data)
     if update.is_group :

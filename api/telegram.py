@@ -54,7 +54,7 @@ class Update:
         self.message_id: int = update["message"]["message_id"]
 
     def _is_group(self):
-        if self.from_type == "supergroup":
+        if self.from_type in ("supergroup", "group"):
             return True
         return False
 

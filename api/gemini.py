@@ -1,24 +1,47 @@
 from io import BytesIO
 
 from google import genai
+from google.genai import types
 import PIL.Image
 
-from .config import GOOGLE_API_KEY, generation_config, safety_settings, gemini_err_info, new_chat_info
+from .config import (
+    GOOGLE_API_KEY, generation_config, safety_settings,
+    gemini_err_info, new_chat_info, SYSTEM_INSTRUCTION,
+)
 
 client = genai.Client(api_key=GOOGLE_API_KEY[0])
 
-_MODEL_VERSION = 'gemini-flash-latest'
+_MODEL_VERSION = "gemini-flash-latest"
+
+
+def _build_gen_config():
+    """Build GenerateContentConfig from config settings."""
+    return types.GenerateContentConfig(
+        max_output_tokens=generation_config.get("max_output_tokens", 1024),
+        safety_settings=[
+            types.SafetySetting(
+                category=s["category"],
+                threshold=s["threshold"],
+            )
+            for s in safety_settings
+        ],
+        system_instruction=SYSTEM_INSTRUCTION if SYSTEM_INSTRUCTION else None,
+    )
 
 
 def list_models():
     """list all models"""
     return client.models.list()
 
-""" This function is deprecated """
+
 def generate_content(prompt: str) -> str:
     """generate text from prompt"""
     try:
-        response = client.models.generate_content(model=_MODEL_VERSION, contents=prompt)
+        response = client.models.generate_content(
+            model=_MODEL_VERSION,
+            contents=prompt,
+            config=_build_gen_config(),
+        )
         result = response.text
     except Exception as e:
         result = f"{gemini_err_info}\n{repr(e)}"
@@ -29,7 +52,11 @@ def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
     """generate text from prompt and image"""
     img = PIL.Image.open(image_bytes)
     try:
-        response = client.models.generate_content(model=_MODEL_VERSION, contents=[prompt, img])
+        response = client.models.generate_content(
+            model=_MODEL_VERSION,
+            contents=[prompt, img],
+            config=_build_gen_config(),
+        )
         result = response.text
     except Exception as e:
         result = f"{gemini_err_info}\n{repr(e)}"
@@ -43,7 +70,10 @@ class ChatConversation:
     """
 
     def __init__(self) -> None:
-        self.chat = client.chats.create(model=_MODEL_VERSION)
+        self.chat = client.chats.create(
+            model=_MODEL_VERSION,
+            config=_build_gen_config(),
+        )
 
     def send_message(self, prompt: str) -> str:
         """send message"""
