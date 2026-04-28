@@ -48,7 +48,7 @@ def ensure_commands():
 
 
 def ensure_webhook():
-    """Set Telegram webhook if not already set."""
+    """Verify and set Telegram webhook if needed."""
     global _webhook_set
     if _webhook_set:
         return
@@ -60,10 +60,10 @@ def ensure_webhook():
         if not webhook_url:
             webhook_url = os.environ.get("VERCEL_URL", "").strip()
         if not webhook_url:
+            print("No WEBHOOK_URL or VERCEL_URL set, skipping webhook setup")
             return
         if not webhook_url.startswith("https://"):
             webhook_url = f"https://{webhook_url}"
-        # Ensure trailing slash for consistent comparison
         if not webhook_url.endswith("/"):
             webhook_url += "/"
         try:
@@ -73,21 +73,18 @@ def ensure_webhook():
             )
             info = r.json().get("result", {})
             current_url = info.get("url", "")
-            # Only set webhook if not already configured (empty)
-            if not current_url:
+            if current_url != webhook_url:
                 http_requests.post(
                     f"https://api.telegram.org/bot{BOT_TOKEN}/setWebhook",
                     json={"url": webhook_url, "allowed_updates": ["message", "callback_query"]},
                     timeout=5
                 )
-                print(f"Webhook set to {webhook_url}")
+                print(f"Webhook set to {webhook_url} (was: {current_url or 'empty'})")
             else:
-                print(f"Webhook already set to {current_url}")
+                print(f"Webhook OK: {current_url}")
             _webhook_set = True
         except Exception as e:
             print(f"Failed to check/set webhook: {e}")
-    # Register commands outside webhook lock
-    ensure_commands()
 
 
 @app.route("/", methods=["POST", "GET"])
