@@ -16,6 +16,8 @@ Super easy, just a single click and you've got it set up on Vercel.
 - It's an all front-end project, and you can get it up and running on Vercel with just one click.
 - Supports Gemini continuous conversation. (Due to Vercel's restrictions, conversations may not be saved for a long time)
 - Supports both Gemini text, image interface, and telegram markdown.
+- Supports **system instruction** via `SYSTEM_INSTRUCTION` env var — customize bot personality and behavior.
+- Default model `gemini-2.5-flash` for fast response (~1s latency).
 
 ## Preparation
 
@@ -65,6 +67,11 @@ Get these things ready, and then fill them in as environment variables in Vercel
 | IS_DEBUG_MODE | No | Whether to enable debug mode. `0` to disable. `1` to enable. Default is `0` . |
 | AUCH_ENABLE | No | `0` to disable auth. Anyone can use this bot. `1` to enable auth. Default is `1` . |
 | GROUP_MODE | No | `1` to use common chat history in groups, `2` to record chat history individually for each person. Default is `1` . |
+| SYSTEM_INSTRUCTION | No | Custom system instruction for Gemini. Define bot personality, behavior rules, or domain expertise. Leave empty to use default behavior. |
+
+## Model
+
+Default model is `gemini-2.5-flash` (fast, ~1s latency). Admins can switch models via `/list_models` to see available options.
 
 Tip: After modifying the environment variables, you need to redeploy them to take effect. You need to enter the internal console of the Vercel project, click the `Deployments` button at the top, select the `···` button to the right of the top item in the list, not the button directly to the right of the "Deployments" title! click `Redeploy` to redeploy.
 
