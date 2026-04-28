@@ -1,4 +1,5 @@
 from time import sleep
+import requests as http_requests
 
 from .auth import is_admin
 from .config import *
@@ -22,6 +23,33 @@ def list_models():
 
 def get_model():
     return f"Current model: `{get_current_model()}`"
+
+
+def setup_menu():
+    """Register bot command menu with Telegram."""
+    commands = [
+        {"command": "new", "description": "Start a new chat"},
+        {"command": "get_model", "description": "Show current Gemini model"},
+        {"command": "set_model", "description": "Switch Gemini model (admin)"},
+        {"command": "list_models", "description": "List available models (admin)"},
+        {"command": "get_my_info", "description": "Get your account info"},
+        {"command": "get_group_info", "description": "Get group info (group only)"},
+        {"command": "get_allowed_users", "description": "Show allowed users (admin)"},
+        {"command": "get_allowed_groups", "description": "Show allowed groups (admin)"},
+        {"command": "get_api_key", "description": "Show API keys (admin)"},
+    ]
+    try:
+        resp = http_requests.post(
+            f"https://api.telegram.org/bot{BOT_TOKEN}/setMyCommands",
+            json={"commands": commands},
+            timeout=10
+        )
+        result = resp.json()
+        if result.get("ok"):
+            return "✅ Command menu registered! Type / in the chat to see it."
+        return f"❌ Failed: {result}"
+    except Exception as e:
+        return f"❌ Error: {e}"
 
 
 def set_model_cmd(command):
@@ -113,6 +141,11 @@ def excute_command(from_id, command, from_type, chat_id):
 
     elif command.startswith("get_model"):
         return get_model()
+
+    elif command == "setup_menu":
+        if not is_admin(from_id):
+            return admin_auch_info
+        return setup_menu()
 
     else:
         return command_format_error_info
