@@ -68,10 +68,11 @@ Get these things ready, and then fill them in as environment variables in Vercel
 | AUCH_ENABLE | No | `0` to disable auth. Anyone can use this bot. `1` to enable auth. Default is `1` . |
 | GROUP_MODE | No | `1` to use common chat history in groups, `2` to record chat history individually for each person. Default is `1` . |
 | SYSTEM_INSTRUCTION | No | Custom system instruction for Gemini. Define bot personality, behavior rules, or domain expertise. Leave empty to use default behavior. |
+| GEMINI_MODEL | No | Default Gemini model. Default is `gemini-2.5-flash`. Can be changed at runtime via `/set_model`. |
 
 ## Model
 
-Default model is `gemini-2.5-flash` (fast, ~1s latency). Admins can switch models via `/list_models` to see available options.
+Default model is `gemini-2.5-flash` (fast, ~1s latency). Admins can switch models via `/set_model <model_name>` and check with `/get_model`. Use `/list_models` to see available options.
 
 Tip: After modifying the environment variables, you need to redeploy them to take effect. You need to enter the internal console of the Vercel project, click the `Deployments` button at the top, select the `···` button to the right of the top item in the list, not the button directly to the right of the "Deployments" title! click `Redeploy` to redeploy.
 

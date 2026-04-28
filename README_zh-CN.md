@@ -105,10 +105,11 @@ send_unrecognized_content = "发送无法识别的内容"
 | AUCH_ENABLE | 否 | `0` 禁用身份验证。任何人都可以使用这个机器人。`1` 启用身份验证。默认为 `1` 。 |
 | GROUP_MODE | 否 | `1` 在群组中使用共同的聊天记录，`2`为每个人单独记录聊天记录。默认为 `1` 。 |
 | SYSTEM_INSTRUCTION | 否 | 自定义系统指令。设定机器人性格、行为规则或专业领域。留空则使用默认行为。 |
+| GEMINI_MODEL | 否 | 默认 Gemini 模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |
 
 ## 模型
 
-默认模型为 `gemini-2.5-flash`（快速，约1秒延迟）。管理员可通过 `/list_models` 查看可用模型。
+默认模型为 `gemini-2.5-flash`（快速，约1秒延迟）。管理员可通过 `/set_model <模型名>` 切换模型，`/get_model` 查看当前模型，`/list_models` 查看可用模型。
 
 提示：修改环境变量后，需要重新部署才能生效。需要进入Vercel项目的内部控制台，点击顶部的`Deployments`按钮，选择列表顶部项右侧的`···`按钮，不是“Deployments”标题正右方的按钮！点击 `Redeploy` 即可重新部署。
 
