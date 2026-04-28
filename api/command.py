@@ -109,10 +109,7 @@ def excute_command(from_id, command, from_type, chat_id):
     if command.startswith("start") or command.startswith("help"):
         return help()
 
-    elif command.startswith("get_my_info"):
-        return get_my_info(from_id)
-
-    elif command == "debug_admin":
+    elif command.startswith("debug_admin"):
         from_id_type = type(from_id).__name__
         admin_id_val = ADMIN_ID
         admin_id_type = type(admin_id_val).__name__
@@ -124,6 +121,11 @@ def excute_command(from_id, command, from_type, chat_id):
                 f"str(from_id): `{str(from_id)}`
 "
                 f"Match: {match}")
+
+    elif command.startswith("get_my_info"):
+        return get_my_info(from_id)
+
+
 
     elif command.startswith("get_group_info"):
         return get_group_info(from_type, chat_id)
