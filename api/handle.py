@@ -32,6 +32,16 @@ def _strip_bot_mention(text):
 
 def handle_message(update_data):
 
+    # Handle chat_member updates (bot added to group)
+    if "chat_member" in update_data:
+        cm = update_data["chat_member"]
+        new_member = cm.get("new_chat_member", {}).get("user", {})
+        if new_member.get("is_bot") and new_member.get("username") == _get_bot_username():
+            chat_id = cm["chat"]["id"]
+            send_message(chat_id, f"{bot_joined_group}\n\n`{chat_id}`")
+            send_log(f"Bot joined group {chat_id}")
+        return
+
     if "message" not in update_data:
         print(f"Ignoring non-message update: {list(update_data.keys())}")
         return
