@@ -35,17 +35,15 @@
 
 1. 点击 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwinniesi%2Ftg-gemini-bot&env=BOT_TOKEN%2CGOOGLE_API_KEY%2CALLOWED_USERS&project-name=tg-gemini-bot&repository-name=tg-gemini-bot) 部署到 Vercel。
 
-2. 设置环境变量（见下方）。
+2. 设置环境变量（见下方），然后重新部署。
 
-3. 访问 Vercel 项目的**域名**（不是 Deployment Domain）来注册 Webhook，或手动访问：
-
-   `https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain>`
+3. 访问 Vercel 项目的**域名**（用自定义域名，不要用 `*.vercel.app` 的部署地址）。会看到设置页面 — 输入 Bot Token 即可注册 Webhook。
 
    ![update_telegram_bot](./screenshots/visit_domains.png)
 
-4. 在页面上填写 Bot Token 完成关联。
-
    ![update_telegram_bot](./screenshots/update_telegram_bot.png)
+
+> **备选方案：** 跳过网页，手动访问 `https://api.telegram.org/bot<你的token>/setWebhook?url=<你的域名>` 注册 Webhook。
 
 ## 环境变量
 

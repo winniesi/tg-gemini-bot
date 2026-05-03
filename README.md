@@ -35,17 +35,15 @@ A personal Telegram bot powered by Google Gemini. Deploy to Vercel in one click.
 
 1. Click [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwinniesi%2Ftg-gemini-bot&env=BOT_TOKEN%2CGOOGLE_API_KEY%2CALLOWED_USERS&project-name=tg-gemini-bot&repository-name=tg-gemini-bot) to deploy.
 
-2. Set the environment variables (see below).
+2. Set the environment variables (see below), then redeploy.
 
-3. Visit your Vercel project's **domain** (not Deployment Domain) to register the webhook, or manually visit:
-
-   `https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain>`
+3. Visit your Vercel project's **domain** (use the custom domain, not the `*.vercel.app` deployment URL). You'll see a setup page — enter your bot token to register the webhook.
 
    ![update_telegram_bot](./screenshots/visit_domains.png)
 
-4. Fill in your bot token on the setup page.
-
    ![update_telegram_bot](./screenshots/update_telegram_bot.png)
+
+> **Alternative:** Skip the web page and register the webhook manually by visiting `https://api.telegram.org/bot<your-token>/setWebhook?url=<your-domain>`
 
 ## Environment Variables
 
