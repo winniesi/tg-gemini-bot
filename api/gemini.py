@@ -104,6 +104,22 @@ def generate_text_with_image(prompt: str, image_bytes: BytesIO) -> str:
     return result
 
 
+def generate_text_with_file(prompt: str, file_bytes: bytes, mime_type: str) -> str:
+    """generate text from prompt and file (video, audio, etc.)"""
+    try:
+        media_part = types.Part.from_bytes(data=file_bytes, mime_type=mime_type)
+        response = _call_with_retry(
+            client.models.generate_content,
+            model=current_model,
+            contents=[prompt, media_part],
+            config=_build_gen_config(),
+        )
+        result = response.text
+    except Exception as e:
+        result = f"{gemini_err_info}\n{repr(e)}"
+    return result
+
+
 class ChatConversation:
     """
     Kicks off an ongoing chat. If the input is /new,

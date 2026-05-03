@@ -13,9 +13,11 @@ tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini
 - 这是用 Flask 构建的 - 超级简单且易于开发。
 - 这是一个全前端项目，只需单击一下即可在 Vercel 上启动并运行。
 - 支持Gemini连续通话。 （由于Vercel的限制，对话可能无法保存很长时间）
-- 支持 Gemini 文本、图像界面和电报 Markdown。
+- 支持 Gemini 文本、图片、视频、音频、语音消息和视频消息。
 - 支持通过 `SYSTEM_INSTRUCTION` 环境变量设置**系统指令** — 自定义机器人性格和行为。
+- 支持回复媒体消息并使用自定义提示词。
 - 默认模型 `gemini-2.5-flash`，响应速度快（约1秒延迟）。
+- 等待 Gemini 响应时显示输入状态。
 
 ## 准备工作
 

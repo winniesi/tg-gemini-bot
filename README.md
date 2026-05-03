@@ -13,9 +13,11 @@ Super easy, just a single click and you've got it set up on Vercel.
 - This is built with Flask - super straightforward and easy to develop.
 - It's an all front-end project, and you can get it up and running on Vercel with just one click.
 - Supports Gemini continuous conversation. (Due to Vercel's restrictions, conversations may not be saved for a long time)
-- Supports both Gemini text, image interface, and telegram markdown.
+- Supports Gemini text, images, videos, audio, voice messages, and video notes.
 - Supports **system instruction** via `SYSTEM_INSTRUCTION` env var — customize bot personality and behavior.
+- Supports replying to media messages with custom prompts.
 - Default model `gemini-2.5-flash` for fast response (~1s latency).
+- Shows typing indicator while waiting for Gemini response.
 
 ## Preparation
 
