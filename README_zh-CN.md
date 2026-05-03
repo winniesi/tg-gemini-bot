@@ -60,6 +60,8 @@
 
 通过 `ALLOWED_GROUPS` 配置后，机器人支持群聊。在已授权的群组中，机器人仅在被 @提及或用户直接回复机器人消息时才会响应。当机器人加入新群组时，会自动发送群组 ID，方便管理员将其添加到 `ALLOWED_GROUPS`。
 
+> **重要：** 必须在 [@BotFather](https://t.me/BotFather) 中关闭群组隐私模式，机器人才能接收群消息。操作步骤：BotFather → `/mybots` → 选择机器人 → **Bot Settings** → **Group Privacy** → **Turn off**。然后将机器人移出群组再重新拉入。
+
 ## 命令
 
 | 命令 | 说明 |

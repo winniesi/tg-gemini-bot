@@ -60,6 +60,8 @@ A personal Telegram bot powered by Google Gemini. Deploy to Vercel in one click.
 
 The bot supports group chats when configured via `ALLOWED_GROUPS`. In authorized groups, the bot only responds when @mentioned or when a user replies directly to a bot message. When the bot joins a group, it automatically sends the group ID so the admin can add it to `ALLOWED_GROUPS`.
 
+> **Important:** You must disable Group Privacy in [@BotFather](https://t.me/BotFather) for the bot to receive group messages. Go to BotFather → `/mybots` → select your bot → **Bot Settings** → **Group Privacy** → **Turn off**. Then remove and re-add the bot to the group.
+
 ## Commands
 
 | Command | Description |

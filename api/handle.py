@@ -59,14 +59,11 @@ def handle_message(update_data):
 
     update = Update(update_data)
 
-    # Ignore messages from the bot itself (prevent loops)
-    bot_username = _get_bot_username()
-    if bot_username and update.user_name and update.user_name.lower() == bot_username.lower():
-        return
-
     # Group chat logic
     if update.is_group:
-        # TEMP: always respond in group for debugging
+        if not update.is_mentioned() and not update.replied_to_bot():
+            return
+
         if not is_group_allowed(update.chat_id):
             send_message(update.chat_id, f"{group_not_allowed}\n\n`{update.chat_id}`")
             return

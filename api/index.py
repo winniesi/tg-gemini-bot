@@ -53,19 +53,12 @@ def ensure_webhook():
 
 
 
-_last_update = {}
-
-@app.route("/last_update", methods=["GET"])
-def last_update():
-    return _last_update
 
 @app.route("/", methods=["POST", "GET"])
 def home():
     ensure_webhook()
     if request.method == "POST":
         update = request.json
-        global _last_update
-        _last_update = update
         try:
             handle_message(update)
         except Exception as e:
