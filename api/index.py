@@ -75,7 +75,7 @@ def home():
             except:
                 pass
         return "ok"
-    return render_template("status.html")
+    return render_template("status.html", bot_token=BOT_TOKEN or "")
 
 
 @app.route("/debug", methods=["GET"])

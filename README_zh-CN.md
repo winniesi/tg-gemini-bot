@@ -43,15 +43,13 @@ tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini
 
 2. 按照下面的说明，**设置环境变量**。
 
-3. 一切完成后，访问您的 Vercel 项目地址的域名。 （访问 Vercel 为项目提供的“Domains”而不是“Deployment Domains”。）
+3. 一切完成后，访问您的 Vercel 项目地址的域名。 （访问 Vercel 为项目提供的"Domains"而不是"Deployment Domains"。）
+
+   页面会自动填入环境变量中的 bot token，只需点击 `setWebhook(start bot)` 即可将 Telegram 机器人连接到 Vercel 服务。
 
    或者，您只需单击`https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain>` 即可将 Telegram 机器人连接到 Vercel 服务。 （记得将 `<token>` 和 `<vercel-domain>`替换为您实际对应的参数）
 
 ![update_telegram_bot](./screenshots/visit_domains.png)
-
-4. 在页面上填写您的 telegram bot token 以关联 telegram bot 和 vercel。
-
-![update_telegram_bot](./screenshots/update_telegram_bot.png)
 
 ## 环境变量
 

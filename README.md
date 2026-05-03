@@ -45,13 +45,11 @@ Get these things ready, and then fill them in as environment variables in Vercel
 
 3. Once everything's done, visit the domain name of your Vercel project address. (Visiting the `Domains` instead of the `Deployment Domains` provided by Vercel for the project .)
 
+   The page will auto-fill your bot token from the environment variable. Simply click `setWebhook(start bot)` to connect your Telegram bot to Vercel services.
+
    Or you could just click on `https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain> ` to connect your Telegram bot to Vercel services. (remember to replace `<token>` and `<vercel-domain>` with your actual corresponding parameters)
 
 ![update_telegram_bot](./screenshots/visit_domains.png)
-
-4. Fill in your telegram bot token on the page to associate telegram bot and vercel.
-
-![update_telegram_bot](./screenshots/update_telegram_bot.png)
 
 ## Environment Variable
 
