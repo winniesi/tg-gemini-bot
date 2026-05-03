@@ -14,7 +14,7 @@ them pretty straight-up without much fuss.
 from .auth import is_authorized
 from .command import excute_command
 from .context import ChatManager, ImageChatManger
-from .telegram import Update, send_message
+from .telegram import Update, send_message, send_typing
 from .printLog import send_log, send_image_log
 from .config import *
 
@@ -43,6 +43,7 @@ def handle_message(update_data):
             send_log(f"@{update.user_name} id:`{update.from_id}`{the_content_sent_is}\n{update.text}\n{the_reply_content_is}\n{response_text}")
 
     elif update.type == "text":
+        send_typing(update.chat_id)
         chat = chat_manager.get_chat(update.chat_id)
         anwser = chat.send_message(update.text)
         extra_text = f"\n\n{prompt_new_info}" if chat.history_length >= prompt_new_threshold * 2 else ""
@@ -52,6 +53,7 @@ def handle_message(update_data):
         send_log(f"@{update.user_name} id:`{update.from_id}`{the_content_sent_is}\n{update.text}\n{the_reply_content_is}\n{response_text}\n{the_logarithm_of_historical_conversations_is}{dialogueLogarithm}")
 
     elif update.type == "photo":
+        send_typing(update.chat_id)
         chat = ImageChatManger(update.photo_caption, update.file_id)
         response_text = chat.send_image()
         send_message(update.chat_id, response_text, reply_to_message_id=update.message_id)

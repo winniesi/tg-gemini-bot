@@ -9,6 +9,14 @@ from .printLog import send_log
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 
+def send_typing(chat_id):
+    """Send typing action to show bot is processing."""
+    try:
+        requests.post(f"{TELEGRAM_API}/sendChatAction", data={"chat_id": chat_id, "action": "typing"}, timeout=2)
+    except:
+        pass
+
+
 def send_message(chat_id, text, **kwargs):
     """send text message"""
     payload = {
