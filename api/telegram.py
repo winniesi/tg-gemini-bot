@@ -1,3 +1,5 @@
+import textwrap
+import time
 from typing import Dict, Literal
 
 import requests
@@ -8,7 +10,23 @@ from .printLog import send_log
 
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
+SEND_MESSAGE_MAX_LENGTH = int(4096 * 0.95)
+
 _bot_username = None
+
+
+def _split_by_words(text: str) -> list[str]:
+    # textwrap.wrap automatically breaks the string at spaces
+    # so words aren't cut in half.
+    return textwrap.wrap(text, width=SEND_MESSAGE_MAX_LENGTH)
+
+
+def _escape_text(text: str) -> str:
+    try:
+        return escape(text)
+    except:
+        return text
+
 
 def _get_bot_username():
     global _bot_username
@@ -29,11 +47,11 @@ def send_typing(chat_id):
         pass
 
 
-def send_message(chat_id, text, **kwargs):
+def _send_message_api(chat_id, text, **kwargs):
     """send text message"""
     payload = {
         "chat_id": chat_id,
-        "text": escape(text),
+        "text": _escape_text(text),
         "parse_mode": "MarkdownV2",
         **kwargs,
     }
@@ -43,11 +61,29 @@ def send_message(chat_id, text, **kwargs):
     return r
 
 
-def send_imageMessage(chat_id, text, imageID):
+def send_message(chat_id, text, **kwargs):
+    """send text message"""
+    results = []
+    current_delay = 0.5
+    chunks = _split_by_words(text)
+
+    for chunk in chunks:
+        result = _send_message_api(chat_id, chunk, **kwargs)
+        results.append(result)
+        # Short sleep to prevent hitting Telegram's burst rate limit
+        if len(chunks) > 1:
+            send_log(f"Sleeping for {current_delay:.1f}s...")
+            time.sleep(current_delay)
+            current_delay = min(current_delay + 0.1, 1)
+
+    return results
+
+
+def send_image_message(chat_id, text, imageID):
     """send image message"""
     payload = {
         "chat_id": chat_id,
-        "caption": escape(text),
+        "caption": _escape_text(text),
         "parse_mode": "MarkdownV2",
         "photo": imageID,
     }
