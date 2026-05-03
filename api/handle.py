@@ -38,6 +38,13 @@ def handle_message(update_data):
 
     msg = update_data["message"]
 
+    # Debug: log all group messages
+    chat_info = msg.get("chat", {})
+    chat_type = chat_info.get("type", "unknown")
+    chat_id = chat_info.get("id", "?")
+    if chat_type in ("group", "supergroup"):
+        print(f"[GROUP DEBUG] chat_id={chat_id} chat_type={chat_type} text={msg.get('text','')[:50]} has_new_members={'new_chat_members' in msg}")
+
     # Handle bot joining a group
     if "new_chat_members" in msg:
         for member in msg["new_chat_members"]:

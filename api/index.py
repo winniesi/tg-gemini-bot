@@ -5,7 +5,7 @@ import threading
 import traceback
 
 from .handle import handle_message
-from .config import BOT_TOKEN, ALLOWED_USERS, DEFAULT_MODEL
+from .config import BOT_TOKEN, ALLOWED_USERS, ALLOWED_GROUPS, DEFAULT_MODEL
 
 app = Flask(__name__)
 
@@ -85,6 +85,7 @@ def debug():
     return {
         "bot_token": token_preview,
         "allowed_users": ALLOWED_USERS,
+        "allowed_groups": ALLOWED_GROUPS,
         "default_model": DEFAULT_MODEL,
         "webhook_url_env": os.environ.get("WEBHOOK_URL", "not set"),
         "vercel_url": os.environ.get("VERCEL_URL", "not set"),
