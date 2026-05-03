@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Update Webhook</title>
+    <script src="https://unpkg.com/htmx.org@1.6.0/dist/htmx.min.js"></script>
+    <style>
+        .center-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        input,
+        a {
+            margin: 15px;
+        }
+    </style>
+    <script>
+        function updateURL() {
+            var userInput = document.getElementById('userInput').value;
+            var currentUrl = window.location.href;
+            var newUrl1 = 'https://api.telegram.org/bot' + userInput + '/setWebhook?url=' + currentUrl + '&allowed_updates=' + '["message"]';
+            var newUrl2 = 'https://api.telegram.org/bot' + userInput + '/getWebhookInfo';
+            var newUrl3 = 'https://api.telegram.org/bot' + userInput + '/deleteWebhook';
+
+            var setWebhookURL = document.getElementById('setWebhookURL');
+            setWebhookURL.href = newUrl1;
+
+            var getWebhookInfoURL = document.getElementById('getWebhookInfoURL');
+            getWebhookInfoURL.href = newUrl2;
+
+            var deleteWebhookURL = document.getElementById('deleteWebhookURL');
+            deleteWebhookURL.href = newUrl3;
+        }
+
+        window.onload = function () {
+            updateURL();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="center-container">
+        <div>
+            <p>Once you've entered your telegram bot token, </p>
+            <p>simply click the link below to connect your Telegram bot
+                with Vercel.</p>
+        </div>
+        <div>telegram bot token: <input id="userInput" type="text" hx-trigger="keyup changed delay:500ms"
+                oninput="updateURL()" style="width: 350px;" />
+        </div>
+        <div><a id="setWebhookURL" href="#">
+                <span id="setWebhook">setWebhook(start bot)</span>
+            </a></div>
+        <a></a>
+        <div><a id="getWebhookInfoURL" href="#">
+                <span id="getWebhookInfo">getWebhookInfo</span>
+            </a></div>
+        <a></a>
+        <div><a id="deleteWebhookURL" href="#">
+                <span id="deleteWebhook">deleteWebhook(stop bot)</span>
+            </a></div>
+    </div>
+</body>
+
+</html>
