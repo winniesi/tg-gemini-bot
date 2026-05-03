@@ -59,7 +59,7 @@ tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini
 | -------------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | GOOGLE_API_KEY       | 是 | 你的 Google Gemini Pro api，看起来像 `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
 | BOT_TOKEN            | 是 | 您申请的 Telegram 机器人token，看起来像 `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
-| ALLOWED_USERS        | 否 | 列出允许的用户的 Telegram ID。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。使用 `/get_my_info` 来获取您的 ID。 |
+| ALLOWED_USERS        | 是 | 列出允许的用户的 Telegram ID。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。使用 `/get_my_info` 来获取您的 ID。 |
 | SYSTEM_INSTRUCTION | 否 | 自定义系统指令。设定机器人性格、行为规则或专业领域。留空则使用默认行为。 |
 | GEMINI_MODEL | 否 | 默认 Gemini 模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |
 

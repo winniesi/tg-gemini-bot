@@ -59,7 +59,7 @@ Get these things ready, and then fill them in as environment variables in Vercel
 | -------------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | GOOGLE_API_KEY       | YES | Your Google gemini pro api, it looks like `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
 | BOT_TOKEN            | YES | The Telegram bot token you applied for, it looks like `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
-| ALLOWED_USERS        | No | List the allowed user's Telegram IDs. If there's more than one person, you can separate them using any symbol in `,，;；` or spaces. and it should look like: `id1,id2`. Use `/get_my_info` to get your ID. |
+| ALLOWED_USERS        | YES | List the allowed user's Telegram IDs. If there's more than one person, you can separate them using any symbol in `,，;；` or spaces. and it should look like: `id1,id2`. Use `/get_my_info` to get your ID. |
 | SYSTEM_INSTRUCTION | No | Custom system instruction for Gemini. Define bot personality, behavior rules, or domain expertise. Leave empty to use default behavior. |
 | GEMINI_MODEL | No | Default Gemini model. Default is `gemini-2.5-flash`. Can be changed at runtime via `/set_model`. |
 
