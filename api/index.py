@@ -41,7 +41,7 @@ def ensure_webhook():
             if current_url != webhook_url:
                 http_requests.post(
                     f"https://api.telegram.org/bot{BOT_TOKEN}/setWebhook",
-                    json={"url": webhook_url, "allowed_updates": ["message", "callback_query"]},
+                    json={"url": webhook_url, "allowed_updates": ["message", "callback_query", "chat_member"]},
                     timeout=5
                 )
                 print(f"Webhook set to {webhook_url} (was: {current_url or 'empty'})")
@@ -90,44 +90,3 @@ def debug():
         "webhook_url_env": os.environ.get("WEBHOOK_URL", "not set"),
         "vercel_url": os.environ.get("VERCEL_URL", "not set"),
     }
-
-
-@app.route("/test_group", methods=["GET"])
-def test_group():
-    """Test group message processing with a simulated @mention."""
-    from .telegram import Update, _get_bot_username, send_message
-    from .auth import is_group_allowed
-
-    test_update = {
-        "update_id": 999999999,
-        "message": {
-            "message_id": 999,
-            "from": {"id": 6702231827, "is_bot": False, "first_name": "Test", "username": "ohmorningsir"},
-            "chat": {"id": -5280543061, "type": "group", "title": "test"},
-            "date": 1700000000,
-            "text": "@tg_ai_test_bot say hello",
-            "entities": [{"type": "mention", "offset": 0, "length": 16}]
-        }
-    }
-
-    steps = []
-    try:
-        bot_username = _get_bot_username()
-        steps.append(f"bot_username: {bot_username}")
-
-        update = Update(test_update)
-        steps.append(f"is_group: {update.is_group}")
-        steps.append(f"is_mentioned: {update.is_mentioned()}")
-        steps.append(f"replied_to_bot: {update.replied_to_bot()}")
-        steps.append(f"type: {update.type}")
-        steps.append(f"text: {update.text}")
-        steps.append(f"chat_id: {update.chat_id}")
-        steps.append(f"is_group_allowed: {is_group_allowed(update.chat_id)}")
-
-        # Try sending a test message
-        r = send_message(-5280543061, "🧪 Test from /test_group endpoint")
-        steps.append(f"send_message status: {r.status_code}")
-    except Exception as e:
-        steps.append(f"ERROR: {traceback.format_exc()}")
-
-    return {"steps": steps}

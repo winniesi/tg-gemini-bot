@@ -48,13 +48,6 @@ def handle_message(update_data):
 
     msg = update_data["message"]
 
-    # Debug: log all group messages
-    chat_info = msg.get("chat", {})
-    chat_type = chat_info.get("type", "unknown")
-    chat_id = chat_info.get("id", "?")
-    if chat_type in ("group", "supergroup"):
-        print(f"[GROUP DEBUG] chat_id={chat_id} chat_type={chat_type} text={msg.get('text','')[:50]} has_new_members={'new_chat_members' in msg}")
-
     # Handle bot joining a group
     if "new_chat_members" in msg:
         for member in msg["new_chat_members"]:
@@ -68,21 +61,11 @@ def handle_message(update_data):
 
     # Group chat logic
     if update.is_group:
-        mentioned = update.is_mentioned()
-        replied = update.replied_to_bot()
-        print(f"[GROUP STEP] is_group=True mentioned={mentioned} replied={replied} text={update.text[:50]}")
-
-        # Only respond when @mentioned or replying to bot
-        if not mentioned and not replied:
-            print(f"[GROUP STEP] Skipping - not mentioned and not replied")
+        if not update.is_mentioned() and not update.replied_to_bot():
             return
 
-        # Check if group is authorized
-        group_ok = is_group_allowed(update.chat_id)
-        print(f"[GROUP STEP] is_group_allowed({update.chat_id}) = {group_ok}")
-        if not group_ok:
+        if not is_group_allowed(update.chat_id):
             send_message(update.chat_id, f"{group_not_allowed}\n\n`{update.chat_id}`")
-            send_log(f"Unauthorized group {update.chat_id}, user @{update.user_name}")
             return
 
         # Strip @mention from text before processing
