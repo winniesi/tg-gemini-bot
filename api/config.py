@@ -9,6 +9,7 @@ GOOGLE_API_KEY = split(r'[,;，；]+', os.environ.get("GOOGLE_API_KEY"))
 """ Optional """
 
 ALLOWED_USERS = split(r'[ ,;，；]+', os.getenv("ALLOWED_USERS", '').replace("@", "").lower())
+ALLOWED_GROUPS = [g.strip() for g in split(r'[,;，；]+', os.getenv("ALLOWED_GROUPS", '')) if g.strip()]
 
 SYSTEM_INSTRUCTION = os.getenv("SYSTEM_INSTRUCTION", "")
 DEFAULT_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
@@ -40,6 +41,8 @@ gemini_err_info = "Something went wrong! Please try again later."
 new_chat_info = "We're having a fresh chat."
 prompt_new_info = "Type /new to kick off a new chat."
 unable_to_recognize_content_sent = "The content you sent is not recognized!"
+group_not_allowed = "This group is not authorized. Please add the following group ID to ALLOWED_GROUPS environment variable and redeploy:"
+bot_joined_group = "Hello! Please add the following group ID to ALLOWED_GROUPS environment variable and redeploy to enable this bot:"
 
 """ Below is some text related to the log """
 send_message_log = "Send a message. The content returned is:"

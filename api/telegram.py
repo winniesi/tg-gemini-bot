@@ -8,6 +8,18 @@ from .printLog import send_log
 
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
+_bot_username = None
+
+def _get_bot_username():
+    global _bot_username
+    if _bot_username is None:
+        try:
+            r = requests.get(f"{TELEGRAM_API}/getMe", timeout=5)
+            _bot_username = r.json().get("result", {}).get("username", "")
+        except:
+            _bot_username = ""
+    return _bot_username
+
 
 def send_typing(chat_id):
     """Send typing action to show bot is processing."""
@@ -78,6 +90,33 @@ class Update:
         self.file_id = self._file_id()
         self.user_name = update["message"]["from"].get("username", f" [{unnamed_user}](tg://openmessage?user_id={self.from_id})")
         self.message_id: int = update["message"]["message_id"]
+        self.chat_type = self.from_type
+        self.is_group = self.chat_type in ("group", "supergroup")
+
+    def is_mentioned(self) -> bool:
+        bot_username = _get_bot_username()
+        if not bot_username:
+            return False
+        msg = self.update["message"]
+        entities = msg.get("entities") or msg.get("caption_entities") or []
+        for entity in entities:
+            if entity.get("type") == "mention":
+                offset = entity["offset"]
+                length = entity["length"]
+                mention = msg.get("text", "")[offset:offset + length]
+                if mention.lower() == f"@{bot_username}".lower():
+                    return True
+        text = msg.get("text", "")
+        if text.lower().startswith(f"@{bot_username}".lower()):
+            return True
+        return False
+
+    def replied_to_bot(self) -> bool:
+        msg = self.update["message"]
+        reply = msg.get("reply_to_message")
+        if not reply:
+            return False
+        return reply.get("from", {}).get("is_bot", False)
 
     def _type(self) -> UpdateType:
         msg = self.update["message"]

@@ -52,10 +52,13 @@
 | GOOGLE_API_KEY | 是 | Google Gemini API Key，支持多个（逗号分隔自动轮询）。前往 [Google AI Studio](https://makersuite.google.com/app/apikey) 申请。 |
 | BOT_TOKEN | 是 | Telegram Bot Token，从 [@BotFather](https://t.me/BotFather) 获取。 |
 | ALLOWED_USERS | 是 | 允许使用的 Telegram 用户 ID，多个用逗号分隔。在机器人中使用 `/get_my_info` 获取你的 ID。 |
+| ALLOWED_GROUPS | 否 | 允许使用的 Telegram 群组 ID，多个用逗号分隔。群组 ID 为负数（如 `-5280543061`）。在群组中使用 `/get_my_info` 获取群组 ID。 |
 | SYSTEM_INSTRUCTION | 否 | 自定义系统指令，定义机器人性格和行为。 |
 | GEMINI_MODEL | 否 | 默认模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |
 
-> **注意：** 仅支持私聊，不支持群组。
+## 群组支持
+
+通过 `ALLOWED_GROUPS` 配置后，机器人支持群聊。在已授权的群组中，机器人仅在被 @提及或用户直接回复机器人消息时才会响应。当机器人加入新群组时，会自动发送群组 ID，方便管理员将其添加到 `ALLOWED_GROUPS`。
 
 ## 命令
 

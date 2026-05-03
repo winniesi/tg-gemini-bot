@@ -52,10 +52,13 @@ A personal Telegram bot powered by Google Gemini. Deploy to Vercel in one click.
 | GOOGLE_API_KEY | Yes | Google Gemini API key(s). Multiple keys supported — separate with commas. Get one at [Google AI Studio](https://makersuite.google.com/app/apikey). |
 | BOT_TOKEN | Yes | Telegram bot token from [@BotFather](https://t.me/BotFather). |
 | ALLOWED_USERS | Yes | Telegram user ID(s). Separate multiple with commas. Use `/get_my_info` in the bot to find your ID. |
+| ALLOWED_GROUPS | No | Telegram group ID(s). Separate multiple with commas. Group IDs are negative numbers (e.g. `-5280543061`). Use `/get_my_info` in a group to find its ID. |
 | SYSTEM_INSTRUCTION | No | Custom system prompt to define bot personality and behavior. |
 | GEMINI_MODEL | No | Default model. Default: `gemini-2.5-flash`. Change at runtime via `/set_model`. |
 
-> **Note:** Only private chats are supported. Group mode is not available.
+## Group Chat Support
+
+The bot supports group chats when configured via `ALLOWED_GROUPS`. In authorized groups, the bot only responds when @mentioned or when a user replies directly to a bot message. When the bot joins a group, it automatically sends the group ID so the admin can add it to `ALLOWED_GROUPS`.
 
 ## Commands
 

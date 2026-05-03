@@ -58,11 +58,13 @@ def set_model_cmd(command):
     return f"Model switched to: `{model_name}`\nNote: existing conversations will use the old model. Send /new to start fresh."
 
 
-def get_my_info(id):
+def get_my_info(id, is_group=False, chat_id=None):
+    if is_group:
+        return f"Group ID: `{chat_id}`\nYour user ID: `{id}`"
     return f"your telegram id is: `{id}`"
 
 
-def excute_command(from_id, command, chat_id):
+def excute_command(from_id, command, chat_id, is_group=False):
     if command.startswith("/"):
         command = command[1:]
     if command.startswith("start") or command.startswith("help"):
@@ -70,7 +72,7 @@ def excute_command(from_id, command, chat_id):
     elif command.startswith("new"):
         return ""  # handled by caller
     elif command.startswith("get_my_info"):
-        return get_my_info(from_id)
+        return get_my_info(from_id, is_group=is_group, chat_id=chat_id)
     elif command.startswith("get_model"):
         return get_model()
     elif command.startswith("set_model"):
