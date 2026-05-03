@@ -3,7 +3,7 @@ from typing import Dict, Literal
 import requests
 from md2tgmd import escape
 
-from .config import BOT_TOKEN, default_photo_caption, default_media_caption, send_message_log, send_photo_log, unnamed_user
+from .config import BOT_TOKEN, default_photo_caption, default_video_caption, default_audio_caption, send_message_log, send_photo_log, unnamed_user
 from .printLog import send_log
 
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
@@ -127,8 +127,10 @@ class Update:
                 return caption
             elif self.media_type == "photo":
                 return default_photo_caption
+            elif self.media_type in ("video", "video_note"):
+                return default_video_caption
             else:
-                return default_media_caption
+                return default_audio_caption
         return ""
 
     def _text(self) -> str:

@@ -18,8 +18,10 @@ prompt_new_threshold = int(3)
 
 # The default prompt when the photo has no accompanying text
 default_photo_caption = "describe this picture"
-# The default prompt for other media types (video, audio, voice, video note)
-default_media_caption = "transcribe this content"
+# The default prompt for video messages
+default_video_caption = "describe what is happening in this video"
+# The default prompt for audio/voice messages
+default_audio_caption = "transcribe this audio"
 
 """ Below is some text related to the user """
 help_text = "You can send me text or pictures. When sending pictures, please include the text in the same message."
