@@ -68,12 +68,19 @@ def handle_message(update_data):
 
     # Group chat logic
     if update.is_group:
+        mentioned = update.is_mentioned()
+        replied = update.replied_to_bot()
+        print(f"[GROUP STEP] is_group=True mentioned={mentioned} replied={replied} text={update.text[:50]}")
+
         # Only respond when @mentioned or replying to bot
-        if not update.is_mentioned() and not update.replied_to_bot():
+        if not mentioned and not replied:
+            print(f"[GROUP STEP] Skipping - not mentioned and not replied")
             return
 
         # Check if group is authorized
-        if not is_group_allowed(update.chat_id):
+        group_ok = is_group_allowed(update.chat_id)
+        print(f"[GROUP STEP] is_group_allowed({update.chat_id}) = {group_ok}")
+        if not group_ok:
             send_message(update.chat_id, f"{group_not_allowed}\n\n`{update.chat_id}`")
             send_log(f"Unauthorized group {update.chat_id}, user @{update.user_name}")
             return
