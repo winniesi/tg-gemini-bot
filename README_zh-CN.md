@@ -1,104 +1,88 @@
 # tg-gemini-bot
 
-[EN](README.md) | [简中](README_zh-CN.md) 
+[EN](README.md) | [简中](README_zh-CN.md)
 
-tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini 服务。
-
-超级简单，只需单击一下，您就可以在 Vercel 上进行设置。
+基于 Google Gemini 的个人 Telegram 机器人，一键部署到 Vercel。
 
 ![screen](./screenshots/screen.png)
 
-## 特点
+## 功能
 
-- 这是用 Flask 构建的 - 超级简单且易于开发。
-- 这是一个全前端项目，只需单击一下即可在 Vercel 上启动并运行。
-- 支持Gemini连续通话。 （由于Vercel的限制，对话可能无法保存很长时间）
-- 支持 Gemini 文本、图片、视频、音频、语音消息和视频消息。
-- 支持通过 `SYSTEM_INSTRUCTION` 环境变量设置**系统指令** — 自定义机器人性格和行为。
-- 支持回复媒体消息并使用自定义提示词。
-- 默认模型 `gemini-2.5-flash`，响应速度快（约1秒延迟）。
-- 等待 Gemini 响应时显示输入状态。
+- 文本对话，支持上下文记忆（用 `/new` 重置）
+- 多媒体支持：图片、视频、音频、语音消息、视频消息
+- 回复媒体消息可用自定义 prompt
+- 通过 `SYSTEM_INSTRUCTION` 设置系统指令 — 自定义机器人性格
+- 默认模型 `gemini-2.5-flash`（约1秒响应），可运行时切换
+- 等待响应时显示输入状态
+- 基于 Telegram ID 的访问控制
+- 支持多个 Google API Key 自动轮询
 
-## 准备工作
+## 支持的媒体
 
-准备好这些东西，然后将它们作为Vercel中的环境变量填充。
+| 类型 | 发送方式 | 无文字时的默认 prompt |
+|------|---------|---------------------|
+| 图片 | 发送图片 | "describe this picture" |
+| 视频 | 发送视频文件 | "describe what is happening in this video" |
+| 音频 | 发送音频文件 | "transcribe this audio" |
+| 语音 | 录制语音消息 | "transcribe this audio" |
+| 视频消息 | 录制圆圈视频 | "describe what is happening in this video" |
 
-- **GOOGLE_API_KEY**
+**自定义 prompt：** 发送媒体时附带文字说明，将覆盖默认 prompt。
 
-  申请您的 Google Gemini Pro api: https://makersuite.google.com/app/apikey
+**回复媒体：** 回复任意媒体消息并附上文字 — Gemini 会用你的文字作为 prompt 来处理该媒体。例如，回复一张照片问"这辆车是什么颜色？"，或回复一条语音说"用3个词总结"。
 
-- **BOT_TOKEN**
-
-  创建您自己的电报机器人 ([查看教程](https://flowxo.com/how-to-create-a-bot-for-telegram-short-and-simple-guide-for-beginners/)), 获取机器人的token，格式类似: `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`
-
-- **允许的用户或群组**
-
-  收集有权访问此机器人的用户或群组 ID。 您可以使用`,，;；`中的任何符号或空格分隔它们。
-
-  您还可以关闭身份验证，以便每个人和群组都可以使用它
-
-  [了解更多](#环境变量)
-
-## 开始使用
+## 快速开始
 
 1. 点击 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwinniesi%2Ftg-gemini-bot&env=BOT_TOKEN%2CGOOGLE_API_KEY%2CALLOWED_USERS&project-name=tg-gemini-bot&repository-name=tg-gemini-bot) 部署到 Vercel。
 
-2. 按照下面的说明，**设置环境变量**。
+2. 设置环境变量（见下方）。
 
-3. 一切完成后，访问您的 Vercel 项目地址的域名。 （访问 Vercel 为项目提供的"Domains"而不是"Deployment Domains"。）
+3. 访问 Vercel 项目的**域名**（不是 Deployment Domain）来注册 Webhook，或手动访问：
 
-   或者，您只需单击`https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain>` 即可将 Telegram 机器人连接到 Vercel 服务。 （记得将 `<token>` 和 `<vercel-domain>`替换为您实际对应的参数）
+   `https://api.telegram.org/bot<bot-token>/setWebhook?url=<vercel-domain>`
 
-![update_telegram_bot](./screenshots/visit_domains.png)
+   ![update_telegram_bot](./screenshots/visit_domains.png)
 
-4. 在页面上填写您的 telegram bot token 以关联 telegram bot 和 vercel。
+4. 在页面上填写 Bot Token 完成关联。
 
-![update_telegram_bot](./screenshots/update_telegram_bot.png)
+   ![update_telegram_bot](./screenshots/update_telegram_bot.png)
 
 ## 环境变量
 
-| 环境变量 | 是否必须 | Description                                                                                                                            |
-| -------------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| GOOGLE_API_KEY       | 是 | 你的 Google Gemini Pro api，看起来像 `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
-| BOT_TOKEN            | 是 | 您申请的 Telegram 机器人token，看起来像 `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
-| ALLOWED_USERS        | 是 | 列出允许的用户的 Telegram ID。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。使用 `/get_my_info` 来获取您的 ID。 |
-| SYSTEM_INSTRUCTION | 否 | 自定义系统指令。设定机器人性格、行为规则或专业领域。留空则使用默认行为。 |
-| GEMINI_MODEL | 否 | 默认 Gemini 模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |
+| 变量 | 必填 | 说明 |
+|------|------|------|
+| GOOGLE_API_KEY | 是 | Google Gemini API Key，支持多个（逗号分隔自动轮询）。前往 [Google AI Studio](https://makersuite.google.com/app/apikey) 申请。 |
+| BOT_TOKEN | 是 | Telegram Bot Token，从 [@BotFather](https://t.me/BotFather) 获取。 |
+| ALLOWED_USERS | 是 | 允许使用的 Telegram 用户 ID，多个用逗号分隔。在机器人中使用 `/get_my_info` 获取你的 ID。 |
+| SYSTEM_INSTRUCTION | 否 | 自定义系统指令，定义机器人性格和行为。 |
+| GEMINI_MODEL | 否 | 默认模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |
 
-> **注意：** 目前不支持群组模式，此机器人仅支持私聊。
+> **注意：** 仅支持私聊，不支持群组。
 
-## 模型
+## 命令
 
-默认模型为 `gemini-2.5-flash`（快速，约1秒延迟）。管理员可通过 `/set_model <模型名>` 切换模型，`/get_model` 查看当前模型，`/list_models` 查看可用模型。
+| 命令 | 说明 |
+|------|------|
+| `/new` | 开始新对话（清除上下文） |
+| `/set_model <模型名>` | 切换 Gemini 模型 |
+| `/get_model` | 查看当前模型 |
+| `/list_models` | 列出可用模型 |
+| `/get_my_info` | 获取你的 Telegram ID |
+| `/help` | 显示帮助 |
 
-提示：修改环境变量后，需要重新部署才能生效。需要进入Vercel项目的内部控制台，点击顶部的`Deployments`按钮，选择列表顶部项右侧的`···`按钮，不是"Deployments"标题正右方的按钮！点击 `Redeploy` 即可重新部署。
+## 使用技巧
 
-## 命令列表
+- **对话记忆：** 机器人会记住聊天历史，用 `/new` 开始新对话。
+- **冷启动：** Vercel 免费版闲置后首条消息可能需要几秒，之后会很快。
+- **给媒体加 prompt：** 不要只发图片 — 加上文字说明如"翻译图中的文字"效果更好。
+- **回复追问：** 对 Gemini 的回答不满意？回复原始媒体发一个新问题。
+- **多 API Key：** 在 `GOOGLE_API_KEY` 中用逗号分隔多个 Key，自动轮询避免限流。
+- **修改环境变量后：** 需在 Vercel 重新部署（Deployments → ⋯ → Redeploy）才生效。
 
-`/new` 开始新的聊天
+## 故障排查
 
-`/get_my_info` 获取您的 Telegram ID
-
-`/get_model` 显示当前 Gemini 模型
-
-`/set_model` 切换 Gemini 模型
-
-`/list_models` 列出可用模型
-
-`/help` 获取帮助
-
-`/help` 获取帮助
-
-`/5g_test` :)
-
-## 如何找出问题所在
-
-因此，如果您已经按照我们所说的那样一步一步完成了所有操作，但您的 Telegram 机器人仍然没有执行其操作，那么最好查看 Vercel 日志以了解发生了什么情况。
-
-1. 在vercel中打开您的项目，点击**Deployments**选项卡，检查部署是否成功，如果有错误，请根据错误提示进行修改。
-
-2. 如果这里没有发生错误，打开**Logs**选项卡，单击错误日志，程序的输出将显示在右侧。
+1. **机器人没响应？** 检查 Vercel **Deployments** 选项卡是否有构建错误。
+2. **部署成功但没反应？** 打开 **Logs** 选项卡，发一条测试消息，查看错误信息。
+3. **还是不行？** 提交 [Issue](https://github.com/winniesi/tg-gemini-bot/issues) 并附上错误日志。
 
 ![screen](./screenshots/vercel_logs.png)
-
-3. 如果有任何错误消息，您可以打开一个issue，然后提供错误信息。
