@@ -3,7 +3,7 @@ from re import split
 
 """ Required """
 
-BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 GOOGLE_API_KEY = split(r'[,;，；]+', os.environ.get("GOOGLE_API_KEY"))
 
 """ Optional """
