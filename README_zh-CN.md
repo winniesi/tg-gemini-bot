@@ -59,7 +59,7 @@ tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini
 | -------------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | GOOGLE_API_KEY       | 是 | 你的 Google Gemini Pro api，看起来像 `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
 | BOT_TOKEN            | 是 | 您申请的 Telegram 机器人token，看起来像 `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
-| ALLOWED_USERS        | 否 | 列出允许的用户的 Telegram ID（推荐使用，更安全）。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。也支持用户名，但 ID 更安全。使用 `/get_my_info` 来获取您的 ID。 |
+| ALLOWED_USERS        | 否 | 列出允许的用户的 Telegram ID。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。使用 `/get_my_info` 来获取您的 ID。 |
 | ALLOWED_GROUPS | 否 | 列出允许的群组的 Telegram 用户名。如果有多个，可以使用“,，;；”中的任意符号或空格将他们分开。它应该看起来像：`group1,group2`。包不包含`@`符号无所谓，所以`ohmorningsirs_group`或`@ohmorningsirs_group`都可以。无需区分大小写。如果是私人群组，可以使用id代替。使用`/get_group_info`来获取。 |
 | ADMIN_ID | 否 | 十位数的 telegramID。 如果要启用调试模式，则必须正确设置该值。 |
 | IS_DEBUG_MODE | 否 | 是否启用调试模式。`0` 禁用。`1` 启用。默认值为 `0` 。 |
