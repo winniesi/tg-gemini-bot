@@ -60,11 +60,10 @@ Get these things ready, and then fill them in as environment variables in Vercel
 | GOOGLE_API_KEY       | YES | Your Google gemini pro api, it looks like `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
 | BOT_TOKEN            | YES | The Telegram bot token you applied for, it looks like `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
 | ALLOWED_USERS        | No | List the allowed user's Telegram IDs. If there's more than one person, you can separate them using any symbol in `,，;；` or spaces. and it should look like: `id1,id2`. Use `/get_my_info` to get your ID. |
-| ALLOWED_GROUPS | No | List the allowed group's Telegram usernames. If there's more than one person, you can separate them using any symbol in `,，;；` or spaces. and it should look like: `group1,group2`.Including the `@` symbol is optional, so either `ohmorningsirs_group` or `@ohmorningsirs_group` is acceptable. No need to be case sensitive. If it is a private group, you can use id instead. use `/get_group_info` to get. |
-
-| GROUP_MODE | No | `1` to use common chat history in groups, `2` to record chat history individually for each person. Default is `1` . |
 | SYSTEM_INSTRUCTION | No | Custom system instruction for Gemini. Define bot personality, behavior rules, or domain expertise. Leave empty to use default behavior. |
 | GEMINI_MODEL | No | Default Gemini model. Default is `gemini-2.5-flash`. Can be changed at runtime via `/set_model`. |
+
+> **Note:** Group mode is not supported yet. This bot only works in private chats.
 
 ## Model
 
@@ -73,29 +72,18 @@ Default model is `gemini-2.5-flash` (fast, ~1s latency). Admins can switch model
 Tip: After modifying the environment variables, you need to redeploy them to take effect. You need to enter the internal console of the Vercel project, click the `Deployments` button at the top, select the `···` button to the right of the top item in the list, not the button directly to the right of the "Deployments" title! click `Redeploy` to redeploy.
 
 ## Command list
+
 `/new` Start a new chat
 
-`/get_my_info` Get personal information
+`/get_my_info` Get your Telegram ID
 
-`/get_group_info` Get group information (group only)
+`/get_model` Show current Gemini model
 
-`/get_allowed_users` Get the list of users that are allowed to use the bot (admin only)
+`/set_model` Switch Gemini model
 
-`/get_allowed_groups` Get the list of groups that are allowed to use the bot (admin only)
-
-`/list_models` list_models (admin only)
-
-`/get_api_key` Get the list of gemini's apikeys. It is currently useless. Multiple keys may be added automatically in the future. (admin only)
+`/list_models` List available models
 
 `/help` Get help
-
-`/5g_test` :)
-
-## Group use
-
-Invite the robot to the group and add it as an administrator. The robot will respond to all messages in the group. Otherwise, it will only respond to messages related to the robot. To use it, you need to @robot or reply to any message sent by the robot.
-
-Currently, topic groups are not well supported, and all messages sent by the robot will be sent in General.
 
 ## How to figure out what's wrong
 

@@ -60,43 +60,34 @@ tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini
 | GOOGLE_API_KEY       | 是 | 你的 Google Gemini Pro api，看起来像 `AI2aS4Cl55F9ni9WN84Qn_KWRSuqXvUWkPq6kovc `                                                  |
 | BOT_TOKEN            | 是 | 您申请的 Telegram 机器人token，看起来像 `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
 | ALLOWED_USERS        | 否 | 列出允许的用户的 Telegram ID。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。使用 `/get_my_info` 来获取您的 ID。 |
-| ALLOWED_GROUPS | 否 | 列出允许的群组的 Telegram 用户名。如果有多个，可以使用“,，;；”中的任意符号或空格将他们分开。它应该看起来像：`group1,group2`。包不包含`@`符号无所谓，所以`ohmorningsirs_group`或`@ohmorningsirs_group`都可以。无需区分大小写。如果是私人群组，可以使用id代替。使用`/get_group_info`来获取。 |
-
-| GROUP_MODE | 否 | `1` 在群组中使用共同的聊天记录，`2`为每个人单独记录聊天记录。默认为 `1` 。 |
 | SYSTEM_INSTRUCTION | 否 | 自定义系统指令。设定机器人性格、行为规则或专业领域。留空则使用默认行为。 |
 | GEMINI_MODEL | 否 | 默认 Gemini 模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |
+
+> **注意：** 目前不支持群组模式，此机器人仅支持私聊。
 
 ## 模型
 
 默认模型为 `gemini-2.5-flash`（快速，约1秒延迟）。管理员可通过 `/set_model <模型名>` 切换模型，`/get_model` 查看当前模型，`/list_models` 查看可用模型。
 
-提示：修改环境变量后，需要重新部署才能生效。需要进入Vercel项目的内部控制台，点击顶部的`Deployments`按钮，选择列表顶部项右侧的`···`按钮，不是“Deployments”标题正右方的按钮！点击 `Redeploy` 即可重新部署。
+提示：修改环境变量后，需要重新部署才能生效。需要进入Vercel项目的内部控制台，点击顶部的`Deployments`按钮，选择列表顶部项右侧的`···`按钮，不是"Deployments"标题正右方的按钮！点击 `Redeploy` 即可重新部署。
 
 ## 命令列表
 
 `/new` 开始新的聊天
 
-`/get_my_info` 获取个人信息
+`/get_my_info` 获取您的 Telegram ID
 
-`/get_group_info` 获取群组信息（仅群组可用）
+`/get_model` 显示当前 Gemini 模型
 
-`/get_allowed_users` 获取允许使用机器人的用户列表（仅管理员可用）
+`/set_model` 切换 Gemini 模型
 
-`/get_allowed_groups` 获取允许使用机器人的群组列表
+`/list_models` 列出可用模型
 
-`/list_models` 列出模型（仅管理员可用）
-
-`/get_api_key` 获取gemini的apikey的列表，目前没有用，以后可能会添加多个key自动切换（仅管理员可用）
+`/help` 获取帮助
 
 `/help` 获取帮助
 
 `/5g_test` :)
-
-## 群组使用
-
-邀请机器人进入群组添加为管理员，机器人会响应群内的所有消息，否则只会响应与机器人有关的消息，使用时需要@机器人或回复机器人发送的任意消息。
-
-目前不能很好的支持 topic 群组，机器人发送的所有消息都会发在 General 中。
 
 ## 如何找出问题所在
 
