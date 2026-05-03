@@ -61,9 +61,7 @@ tg-gemini-bot 可让您直接在个人 Telegram 机器人上使用 Google Gemini
 | BOT_TOKEN            | 是 | 您申请的 Telegram 机器人token，看起来像 `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
 | ALLOWED_USERS        | 否 | 列出允许的用户的 Telegram ID。如果有多个，可以使用",，;；"中的任意符号或空格将他们分开。它应该看起来像：`id1,id2`。使用 `/get_my_info` 来获取您的 ID。 |
 | ALLOWED_GROUPS | 否 | 列出允许的群组的 Telegram 用户名。如果有多个，可以使用“,，;；”中的任意符号或空格将他们分开。它应该看起来像：`group1,group2`。包不包含`@`符号无所谓，所以`ohmorningsirs_group`或`@ohmorningsirs_group`都可以。无需区分大小写。如果是私人群组，可以使用id代替。使用`/get_group_info`来获取。 |
-| ADMIN_ID | 否 | 十位数的 telegramID。 如果要启用调试模式，则必须正确设置该值。 |
-| IS_DEBUG_MODE | 否 | 是否启用调试模式。`0` 禁用。`1` 启用。默认值为 `0` 。 |
-| AUCH_ENABLE | 否 | `0` 禁用身份验证。任何人都可以使用这个机器人。`1` 启用身份验证。默认为 `1` 。 |
+
 | GROUP_MODE | 否 | `1` 在群组中使用共同的聊天记录，`2`为每个人单独记录聊天记录。默认为 `1` 。 |
 | SYSTEM_INSTRUCTION | 否 | 自定义系统指令。设定机器人性格、行为规则或专业领域。留空则使用默认行为。 |
 | GEMINI_MODEL | 否 | 默认 Gemini 模型，默认 `gemini-2.5-flash`。可通过 `/set_model` 运行时切换。 |

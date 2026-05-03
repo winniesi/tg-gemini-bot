@@ -61,9 +61,7 @@ Get these things ready, and then fill them in as environment variables in Vercel
 | BOT_TOKEN            | YES | The Telegram bot token you applied for, it looks like `67295022320:AAHmfuSQb0ZoUq0ycNPvgzqCCX7I1uzzaSE`                                |
 | ALLOWED_USERS        | No | List the allowed user's Telegram IDs. If there's more than one person, you can separate them using any symbol in `,，;；` or spaces. and it should look like: `id1,id2`. Use `/get_my_info` to get your ID. |
 | ALLOWED_GROUPS | No | List the allowed group's Telegram usernames. If there's more than one person, you can separate them using any symbol in `,，;；` or spaces. and it should look like: `group1,group2`.Including the `@` symbol is optional, so either `ohmorningsirs_group` or `@ohmorningsirs_group` is acceptable. No need to be case sensitive. If it is a private group, you can use id instead. use `/get_group_info` to get. |
-| ADMIN_ID | No | ten-digit telegramID. If you want to enable debug mode, this value must be set correctly. |
-| IS_DEBUG_MODE | No | Whether to enable debug mode. `0` to disable. `1` to enable. Default is `0` . |
-| AUCH_ENABLE | No | `0` to disable auth. Anyone can use this bot. `1` to enable auth. Default is `1` . |
+
 | GROUP_MODE | No | `1` to use common chat history in groups, `2` to record chat history individually for each person. Default is `1` . |
 | SYSTEM_INSTRUCTION | No | Custom system instruction for Gemini. Define bot personality, behavior rules, or domain expertise. Leave empty to use default behavior. |
 | GEMINI_MODEL | No | Default Gemini model. Default is `gemini-2.5-flash`. Can be changed at runtime via `/set_model`. |
