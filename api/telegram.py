@@ -1,3 +1,5 @@
+import textwrap
+import time
 from typing import Dict, Literal
 
 import requests
@@ -8,7 +10,23 @@ from .printLog import send_log
 
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
+SEND_MESSAGE_MAX_LENGTH = int(4096 * 0.95)
+
 _bot_username = None
+
+
+def _split_by_words(text: str) -> list[str]:
+    # textwrap.wrap automatically breaks the string at spaces
+    # so words aren't cut in half.
+    return textwrap.wrap(text, width=SEND_MESSAGE_MAX_LENGTH)
+
+
+def _escape_text(text: str) -> str:
+    try:
+        return escape(text)
+    except Exception:
+        return text
+
 
 def _get_bot_username():
     global _bot_username
@@ -16,7 +34,7 @@ def _get_bot_username():
         try:
             r = requests.get(f"{TELEGRAM_API}/getMe", timeout=5)
             _bot_username = r.json().get("result", {}).get("username", "")
-        except:
+        except Exception:
             _bot_username = ""
     return _bot_username
 
@@ -25,48 +43,47 @@ def send_typing(chat_id):
     """Send typing action to show bot is processing."""
     try:
         requests.post(f"{TELEGRAM_API}/sendChatAction", data={"chat_id": chat_id, "action": "typing"}, timeout=2)
-    except:
+    except Exception:
         pass
 
 
-def send_message(chat_id, text, **kwargs):
-    """send text message, splitting if over Telegram's 4096 char limit"""
-    MAX_LEN = 4096
-    escaped = escape(text)
-    parts = []
-    while len(escaped) > MAX_LEN:
-        # try to split at last newline within limit
-        split_at = escaped.rfind("\n", 0, MAX_LEN)
-        if split_at < MAX_LEN // 2:
-            # no good newline, split at last space
-            split_at = escaped.rfind(" ", 0, MAX_LEN)
-        if split_at < MAX_LEN // 2:
-            # no good space either, hard split
-            split_at = MAX_LEN
-        parts.append(escaped[:split_at])
-        escaped = escaped[split_at:].lstrip("\n")
-    parts.append(escaped)
-
-    for i, part in enumerate(parts):
-        payload = {
-            "chat_id": chat_id,
-            "text": part,
-            "parse_mode": "MarkdownV2",
-            **kwargs,
-        }
-        r = requests.post(f"{TELEGRAM_API}/sendMessage", data=payload)
-        print(f"Sent message part {i+1}/{len(parts)}: {part[:80]}... to {chat_id}")
-        # only reply_to the first part
-        kwargs.pop("reply_to_message_id", None)
-    send_log(f"{send_message_log}\\n```json\\n{str(r)}```")
+def _send_message_api(chat_id, text, **kwargs):
+    """send text message"""
+    payload = {
+        "chat_id": chat_id,
+        "text": _escape_text(text),
+        "parse_mode": "MarkdownV2",
+        **kwargs,
+    }
+    r = requests.post(f"{TELEGRAM_API}/sendMessage", data=payload)
+    print(f"Sent message: {text} to {chat_id}")
+    send_log(f"{send_message_log}\n```json\n{str(r)}```")
     return r
 
 
-def send_imageMessage(chat_id, text, imageID):
+def send_message(chat_id, text, **kwargs):
+    """send text message"""
+    results = []
+    current_delay = 0.5
+    chunks = _split_by_words(text)
+
+    for chunk in chunks:
+        result = _send_message_api(chat_id, chunk, **kwargs)
+        results.append(result)
+        # Short sleep to prevent hitting Telegram's burst rate limit
+        if len(chunks) > 1:
+            send_log(f"Sleeping for {current_delay:.1f}s...")
+            time.sleep(current_delay)
+            current_delay = min(current_delay + 0.1, 1)
+
+    return results
+
+
+def send_image_message(chat_id, text, imageID):
     """send image message"""
     payload = {
         "chat_id": chat_id,
-        "caption": escape(text),
+        "caption": _escape_text(text),
         "parse_mode": "MarkdownV2",
         "photo": imageID,
     }
