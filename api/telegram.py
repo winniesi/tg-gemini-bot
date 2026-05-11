@@ -1,4 +1,3 @@
-import textwrap
 import time
 from typing import Dict, Literal
 
@@ -15,10 +14,42 @@ SEND_MESSAGE_MAX_LENGTH = int(4096 * 0.95)
 _bot_username = None
 
 
+_CJK_BREAK_POINTS = set('，。！？、；：…—')
+
+
 def _split_by_words(text: str) -> list[str]:
-    # textwrap.wrap automatically breaks the string at spaces
-    # so words aren't cut in half.
-    return textwrap.wrap(text, width=SEND_MESSAGE_MAX_LENGTH)
+    """Split text at word boundaries, preferring CJK punctuation breaks."""
+    if len(text) <= SEND_MESSAGE_MAX_LENGTH:
+        return [text]
+
+    chunks = []
+    while len(text) > SEND_MESSAGE_MAX_LENGTH:
+        limit = SEND_MESSAGE_MAX_LENGTH
+        best_break = -1
+
+        # 1. CJK punctuation (best)
+        for i in range(limit - 1, limit // 2, -1):
+            if text[i] in _CJK_BREAK_POINTS:
+                best_break = i + 1
+                break
+
+        # 2. Whitespace (good)
+        if best_break == -1:
+            for i in range(limit - 1, limit // 2, -1):
+                if text[i].isspace():
+                    best_break = i + 1
+                    break
+
+        # 3. Hard break (fallback)
+        if best_break == -1:
+            best_break = limit
+
+        chunks.append(text[:best_break])
+        text = text[best_break:].lstrip()
+
+    if text:
+        chunks.append(text)
+    return chunks
 
 
 def _escape_text(text: str) -> str:
